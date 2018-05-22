@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 权限 -->
+	<class name="com.etiansoft.ole.po.SysPermission" table="SYS_PERMISSION">
+		<id name="permissionId" type="java.lang.String">
+			<column name="PERMISSION_ID" />
+			<generator class="assigned" />
+		</id>
+		<property name="parentId" type="java.lang.String">
+			<column name="PARENT_ID" not-null="true">
+				<comment>父权限ID</comment>
+			</column>
+		</property>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="notes" type="java.lang.String">
+			<column name="NOTES">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<set name="points" table="SYS_PERMISSION_POINT" cascade="all" fetch="join">
+			<key column="PERMISSION_ID" />
+			<one-to-many class="com.etiansoft.ole.po.SysPermissionPoint" />
+		</set>
+	</class>
+</hibernate-mapping>

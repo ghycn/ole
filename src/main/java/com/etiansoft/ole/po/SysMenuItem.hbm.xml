@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 菜单 -->
+	<class name="com.etiansoft.ole.po.SysMenuItem" table="SYS_MENU_ITEM">
+		<id name="menuItemId" type="java.lang.Integer">
+			<column name="MENU_ITEM_ID" />
+			<generator class="native" />
+		</id>
+		<property name="url" type="java.lang.String">
+			<column name="URL" not-null="true">
+				<comment>URL</comment>
+			</column>
+		</property>
+		<property name="sort" type="java.lang.Integer">
+			<column name="SORT">
+				<comment>排序</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,100 @@
+<@g.docType />
+<html>
+<!-- <script type="text/javascript" src="${ctx}/static/script/global.js"></script> -->
+<script type="text/javascript"
+	src="${ctx}/static/script/wkLeave/apply.js"></script>
+<body>
+	<form action="${ctx}/wkLeave/apply/addOrUpdate" method="post"
+		id="WkLeaveCh" style="margin: 0px 20px;">
+		<@g.close />
+		<div
+			style="text-align: center; font-size: 16px; font-weight: bolder; margin: 10px auto;"><@m.m
+			"wkLeave.applyLeave" /></div>
+		<table class="tables"
+			style="width: 90%; text-align: center; margin-left: 20px;">
+			<tr>
+				<td><@m.m "wkLeave.startDate" />：</td>
+				<td><input type="hidden" value="${wkLeave.leaveId}"
+					name="leaveId" />
+					<div class="input-group date clear_date col-md-5"
+						data-date-format="yyyy-mm-dd" style="width: 350px;">
+						<input class="form-control calculate" size="16" type="text" name="start"
+							style="width: 230px; cursor: pointer;"
+							value="<#if wkLeave.startDate??>${wkLeave.startDate?date('yyyy-MM-dd')}<#else>${currentDate}</#if>"
+							readonly> <span class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span></span> <select
+							class="form-control" id="timeStart" name="startDateSlot"
+							onchange="checkTimes()" style="width: 85px; margin-left: 3px;">
+							<option value="0"<#if
+								!wkLeave.startDateSlot>selected="selected"</#if>><@m.m
+								"global.morning"/></option>
+							<option value="1"<#if
+								wkLeave.startDateSlot>selected="selected"</#if>><@m.m
+								"global.afternoon" /></option>
+						</select>
+					</div></td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.endDate" />：</td>
+				<td>
+					<div class="input-group date clear_date col-md-5"
+						data-date-format="yyyy-mm-dd" style="width: 350px;">
+						<input class="form-control calculate" size="16" type="text"
+							style="width: 230px; cursor: pointer;" name="end"
+							value="<#if wkLeave.endDate??>${wkLeave.endDate?date('yyyy-MM-dd')}<#else>${currentDate}</#if>"
+							readonly> <span class="input-group-addon"><span
+							class="glyphicon glyphicon-calendar"></span></span> <select
+							class="form-control" id="timeEnd" name="endDateSlot"
+							onchange="checkTimes()" style="width: 85px; margin-left: 3px;">
+							<option value="0"<#if
+								!wkLeave.endDateSlot>selected="selected"</#if>><@m.m
+								"global.morning" /></option>
+							<option value="1"<#if
+								wkLeave.endDateSlot>selected="selected"</#if>><@m.m
+								"global.afternoon" /></option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.appDays" />：</td>
+				<td><input type="text" readonly="readonly"
+					style="width: 350px;" class="form-control" name="duration"
+					value="<#if wkLeave.duration??>${wkLeave.duration}<#else>0.5</#if>"></td>
+			</tr>
+			<tr>
+				<td><@m.m "holiday.duration" />：</td>
+				<td><input type="text" readonly="readonly"
+					style="width: 350px;" class="form-control" name="surplusLeaveDays"
+					value="<#if surplusLeaveDays??>${surplusLeaveDays}<#else>0</#if>"></td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.reason" />：</td>
+				<td class="controls"><input type="text" style="width: 350px;"
+					class="form-control" name="notes" check-type="required"
+					required-message="<@m.m 'global.notNull' />"></td>
+			</tr>
+		</table>
+		<div style="margin: 20px 0; text-align: center; width: 100%;">
+			<#if wkLeave.leaveId??> <input type="submit"
+				value="<@m.m 'global.edit' />" class="btn btn-default" /> <#else> <input
+				type="submit" value="<@m.m 'wkLeave.applyLeave' />"
+				class="btn btn-default" /> </#if> <input type="button"
+				value="<@m.m 'global.cancel' />" class="btn btn-default"
+				data-dismiss="modal" />
+		</div>
+	</form>
+	<script type="text/javascript">
+	$('.clear_date').datetimepicker({
+// 		endDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<@g.close />
+<body>
+	<form action="${ctx}/device/update" method="post" id="userForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "device.edit" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<input type="hidden" value="${device.deviceCode}" name="deviceCode"/>
+			<table id="deviceEditTable" style="margin-left: 50PX; width: 70%;">
+				<tr>
+					<td style="text-align: right;"><@m.m "device.name" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="name" value="${device.name}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.total" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="total" id="total" value="${device.total}" check-type="number" number-message="<@m.m 'global.numberError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.staffHoldNum" />：</td>
+					<td class="controls"><input type="text" class="form-control" readonly="readonly" id="staffHoldNum" name="staffHoldNum" value="${device.staffHoldNum}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.stockNum" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="stockNum" id="stockNum" value="${device.stockNum}" check-type="number" number-message="<@m.m 'global.numberError' />"></td>
+				</tr>
+			</table>
+			<input type="submit" onclick="return checkTotal()" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+$(function() {
+	$('#userForm').validation();
+});
+</script>
+</html>

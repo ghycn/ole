@@ -1,0 +1,50 @@
+<@g.docType />
+<html>
+<@g.head title="device.borrow.borrowRecord" />
+<script type="text/javascript"
+	src="${ctx}/static/script/device/approvingDeviceBorrow.js"></script>
+</head>
+<body>
+	<@g.top /> <@g.nav/>
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="tabs-search">
+					<@g.nav_tabs 
+					names="menu.userManagement,menu.roleManagement,activity.define,global.parameterConfig,menu.leaveDays,menu.equipmentManagement"
+					urls="/user/list,/role/list,/activity/list,/config/info,/user/leaveList,/approving/device/list"
+					active="menu.equipmentManagement"/>
+					<div class="tableSearch">
+						<label><@m.m "device.borrow.borrower" />: <input
+							class="form-control input-sm" type="text" id="lender"
+							name="lender" style="width: 200px; display: inline;"> <input
+							type="hidden" value="${deviceCode}" id="deviceCode">
+						</label> <label
+							style="float: left; height: 30px; line-height: 30px; margin-right: 8px;"><@m.m
+							"device.borrow.status" />：</label> <select id="status"
+							class="form-control"
+							style="height: 30px; width: 150px; float: left; margin-right: 10px;">
+							<option value=""><@m.m "holiday.whole" /></option>
+							<option value="false"><@m.m
+								"device.borrow.noReturn" /></option>
+							<option value="true"><@m.m "device.borrow.return" /></option>
+						</select>
+						<button class="btn btn-default btn-sm" type="button"
+							onclick="search('deviceBorrow-dataTable')"><@m.m
+							"global.query" /></button>
+						<button class="btn btn-default btn-sm" typw="button"
+							data-toggle="modal" data-target="#modalDiv"
+							data-backdrop="static" href="${ctx}/approving/deviceBorrow/add"><@m.m
+							"global.add" /></button>
+					</div>
+				</div>
+				<@g.modal id="modalDiv"/>
+				<div class="panel-body">
+					<table class="table table-striped table-bordered table-hover"
+						id="deviceBorrow-dataTable" myRp="g"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

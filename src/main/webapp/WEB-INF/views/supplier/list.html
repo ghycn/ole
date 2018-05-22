@@ -1,0 +1,35 @@
+<@g.docType />
+<html>
+<@g.head title="menu.manufacturerList" />
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/supplier/supplier.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/supplier/supplierList.js"></script>
+</head>
+<body>
+	<@g.top />
+	<@g.nav />
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="tabs-search">
+					<@g.nav_tabs names="menu.manufacturerList" urls="/supplier/list" active="menu.manufacturerList"/>
+					<div class="tableSearch">
+						<label><@m.m "supplier.name" />: <input class="form-control input-sm" id="name" style="width: 200px; display: inline;"></label>
+						<button class="btn btn-default btn-sm" type="button" onclick="search('supplier-dataTable');"><@m.m "global.query" /></button>
+						<button class="btn btn-default btn-sm" id="exportPDF" onclick="javascript:window.location.href='${ctx}/supplier/exportPdf'"><@m.m 'supplier.exportPDF' /></button>
+						<button class="btn btn-default btn-sm" typw="button" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/susupplier/type"><@m.m "susupplier.classification" /></button>
+						<button class="btn btn-default btn-sm" typw="button" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/supplier/add"><@m.m "supplier.add" /></button>
+					</div>
+				</div>
+				<@g.modal id="modalDiv" width="700"/>
+				<input id="roleId" type="hidden" value="${roleId}">
+				<div class="panel-body">
+					<div class="dataTable_wrapper">
+						<table class="table table-striped table-bordered table-hover" id="supplier-dataTable" style="text-align: center;" myRp="g"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

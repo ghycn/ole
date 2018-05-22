@@ -1,0 +1,60 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/device/checkBorrow.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/device/applyBorrowSubmit" method="post" id="applyBorrowForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "device.applyBorrow" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<input type="hidden" value="${devices.deviceCode}" name="deviceCode"/>
+		<input type="hidden" value="${stockNum}" name="stockNum" id="stockNum"/>
+			<table id="applyBorrowTable" style="margin-left: 50px">
+				<tr>
+					<td style="text-align: right;"><@m.m "device.name" />：</td>
+					<td class="controls" style="width:83%;"><input type="text" class="form-control" name="name" value="${devices.name}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.lendNum" />：</td>
+					<td class="controls"><input type="text" class="form-control" placeholder="<@m.m 'global.numberError' />" id = "lendNum" name="lendNum" check-type="number" number-message="<@m.m 'global.numberError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrower" />：</td>
+					<td class="controls">
+						<select class="form-control" name="userCode">
+							<#list sysUsers as sysUser>
+								<option value="${sysUser.userCode}">${sysUser.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrowTime" />：</td>
+					<td>
+						</div>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 300px;">
+							<input class="form-control" style="width:290px;cursor: pointer;" size="16" type="text" name="borrowTime" value="<#if applyTime??>${applyTime?string('yyyy-MM-dd')}<#else>${currentDate}</#if>" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.returnTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 300px;">
+							<input class="form-control" size="16" style="width:290px;cursor: pointer;" type="text" name="returnTime" value="<#if returnTime??>${returnTime?string('yyyy-MM-dd')}<#else>${currentDate}</#if>" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					   	</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "collectMoney.notes" />：</td>
+					<td><input type="text" class="form-control" placeholder="<@m.m "collectMoney.notes" />" name="notes"></td>
+				</tr>
+			</table>
+			<input type="submit" value="<@m.m 'wkLeave.submit' />" onclick="return judgeCount()" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+</html>

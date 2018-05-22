@@ -1,0 +1,28 @@
+var languages_map = {};
+
+<#list entrySet as entry>
+	languages_map['${entry.key}'] = '<@m.m entry.key />';
+</#list>
+
+function i18n(key) {
+	return languages_map[key];
+}
+
+function changeLanguage(locale) {
+	var url = window.location.href;
+	if (url.indexOf('locale=') != -1) {
+		var starIndex = url.indexOf('locale=');
+		var endIndex = url.indexOf("&", starIndex + 1);
+		if (endIndex == -1) {
+			endIndex = url.length;
+		}
+		url = url.substring(0, starIndex) + 'locale=' + locale + url.substring(endIndex, url.length);
+	} else {
+		if (url.indexOf('?') != -1) {
+			url += '&locale=' + locale;
+		} else {
+			url += '?locale=' + locale;
+		}
+	}
+	window.location.href = url;
+}

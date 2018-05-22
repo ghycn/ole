@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 厂商联络表 -->
+	<class name="com.etiansoft.ole.po.SuSupplierContact" table="SU_SUPPLIER_CONTACT">
+		<id name="supplierContactId" type="java.lang.Integer">
+			<column name="SUPPLIER_CONTACT_ID" />
+			<generator class="native" />
+		</id>
+		<many-to-one name="supplierCode" column="SUPPLIER_CODE" class="com.etiansoft.ole.po.SuSupplier"/>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>联络人名称</comment>
+			</column>
+		</property>
+		<property name="tel" type="java.lang.String">
+			<column name="TEL">
+				<comment>座机</comment>
+			</column>
+		</property>
+		<property name="extension" type="java.lang.String">
+			<column name="EXTENSION">
+				<comment>分机</comment>
+			</column>
+		</property>
+		<property name="mobile" type="java.lang.String">
+			<column name="MOBILE">
+				<comment>手机</comment>
+			</column>
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+		<property name="postCode" type="java.lang.String">
+			<column name="POST_CODE">
+				<comment>邮编</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME" not-null="true">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

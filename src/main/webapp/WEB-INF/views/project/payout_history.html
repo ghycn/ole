@@ -1,0 +1,43 @@
+<@g.docType />
+<html>
+<@g.head title="menu.casesList">
+<script type="text/javascript" src="${ctx}/static/script/project/history.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<input  type="hidden" id="taxRate" value="${taxRate}"> 
+				<@g.nav_tabs names="menu.casesList" urls="/project/list" active="menu.casesList"/>
+				<div class="tableSearch" style="width: 100%;float: left;">
+					<label style="float: left;height: 30px;line-height: 30px;"><@m.m "global.status"/>:&nbsp;</label>
+					<select name="selectDropDown" id="status" style="height: 30px; width: 150px;float: left;" class="form-control">
+						<option selected="true" value=""><@m.m "holiday.whole"/></option>
+						<option value="1"><@m.m "holiday.approve"/></option>
+						<option value="0"><@m.m "global.audit"/></option>
+						<option value="2"><@m.m "holiday.rejectedChange"/></option>
+<!-- 						<option value="3"><@m.m "holiday.cancellation"/></option>  -->
+					</select>&nbsp;
+<!-- 					<label><@m.m "quotation.caseName" />:</label> -->
+<!-- 					<input class="form-control input-sm" id="proName" name="name" style="width: 100px; display: inline;">&nbsp; -->
+					<label><@m.m "caselist.openCasePeople" />:</label>
+					<input class="form-control input-sm" id="openStaff" name="name" style="width: 100px; display: inline;">&nbsp;
+					<button class="btn btn-default btn-sm" type="button" onclick="search('prProject-dataTable')"><@m.m "global.query" /></button>
+				</div>
+			</div>
+<!-- 			<@g.modal id="modalDiv" width="1200"/> -->
+<!-- 			<@g.modal id="modalDiv2" width="1200"/> -->
+<!-- 			<@g.modal id="modalDiv3"/> -->
+<!-- 			<@g.modal id="info"/> -->
+			<input type="hidden" id="projectCode" value="${projectCode}">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover" id="prProject-dataTable" myRp="g"></table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

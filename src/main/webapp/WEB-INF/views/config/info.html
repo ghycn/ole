@@ -1,0 +1,85 @@
+<@g.docType />
+<html>
+<@g.head title="global.parameterConfig">
+<link href="${ctx}/static/css/personalData/basicInfo.css" rel="stylesheet">
+<!-- <script type="text/javascript" src="${ctx}/static/script/config/info.js"></script> -->
+</@g.head>
+<body>
+	<@g.top /> <@g.nav />
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="tabs-search"><@g.nav_tabs
+					names="menu.userManagement,menu.roleManagement,activity.define,global.parameterConfig,menu.equipmentManagement"
+					urls="/user/list,/role/list,/activity/list,/config/info,/approving/device/list"
+					active="global.parameterConfig"/></div>
+				<div class="formDiv">
+<!-- 					<input id="taxEditButton" type="submit" -->
+<!-- 						value="<@m.m 'global.edit' />" class="btn btn-default" -->
+<!-- 						style="float: right; margin-right: 20px;" onclick="edit();" /> -->
+					<input type="submit"   value="<@m.m 'global.add' />" class="btn btn-default " style="float: right; margin-right: 20px;" data-toggle="modal" data-target="#myModal" data-backdrop="static"/>
+					<form action="${ctx}/config/update" method="post" myForm="j&p">
+						<table  border="1" width="400"  style="margin: 0 auto;">
+							<tr>
+								<td align="center" style="width: 50px;font-size: 20px;"><@m.m "quotation.tax" /></td>
+								<td align="center" style="width: 50px;font-size: 20px;"><@m.m "global.isUsed"/></td>
+								<td align="center" style="width: 50px;font-size: 20px;"><@m.m "global.opera"/></td>
+							</tr>	
+							<#list configs  as config>	
+								<tr id="taxInfo" style="font-size: 20px;">
+									<td align="center" >${config.taxRate}</td>
+									<td align="center" >
+										<#if config.isUsed == 0><@m.m "global.isNotUse"/></#if>
+										<#if config.isUsed == 1><@m.m "global.isUse"/></#if>
+									</td>
+									<td align="center" ><a href="${ctx}/config/setIsUsed?id=${config.id}"><@m.m "global.startUsing"/></a></td>
+								</tr>
+							</#list>	
+						</table>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+				       <@m.m 'global.add' /><@m.m "quotation.tax" />
+            </h4>
+         </div>
+         <div align="center" class="modal-body">
+  				 <@m.m "quotation.tax" />：<input id="taxRate" name="taxRate"  size="4"/>%
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal"><@m.m "global.close" />
+            </button>
+            <button type="button" class="btn btn-primary" onclick="add();">
+     			     <@m.m "global.commit" />
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+</div><!-- /.modal -->
+</body>
+</html>
+
+<script type="text/javascript">
+<!--
+	function add(){
+		var taxRate = $("#taxRate").val();
+		if(taxRate==""){
+			alert("税点不能为空!");
+			return false;
+		}else{
+			window.location.href = ctx+'/config/update?taxRate='+taxRate;
+		}
+	}
+//-->
+</script>

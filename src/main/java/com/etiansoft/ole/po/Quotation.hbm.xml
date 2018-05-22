@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 报价 -->
+	<class name="com.etiansoft.ole.po.Quotation" table="QUOTATION">
+		<id name="quotationId" type="java.lang.Integer">
+			<column name="QUOTATION_ID" />
+			<generator class="native" />
+		</id>
+		<many-to-one name="activity" column="ACTIVITY_CODE" />
+		<many-to-one name="prProject" column="PROJECT_CODE" update="false"/>
+		<many-to-one name="applicant" column="APPLICANT"/>
+		<set name="quotationList">
+			<key column="QUOTATION_ID"/>
+			<one-to-many class="com.etiansoft.ole.po.QuotationList"/>
+		</set>
+		<many-to-one name="customer"/>
+		<property name="contact" type="java.lang.String">
+			<column name="Contact">
+				<comment>联系人</comment>
+			</column>
+		</property>
+		<property name="tel" type="java.lang.String">
+			<column name="TEL">
+				<comment>座机</comment>
+			</column>
+		</property>
+		<property name="caseTime" type="java.util.Date">
+			<column name="CASETIME">
+				<comment>开案时间</comment>
+			</column>
+		</property>
+		<property name="taxTotal" type="java.lang.Double" update="false">
+			<column name="TAXTOTAL">
+				<comment>含税小计</comment>
+			</column>
+		</property>
+		<property name="phone" type="java.lang.String">
+			<column name="PHONE">
+				<comment>电话</comment>
+			</column>
+		</property>
+		<property name="date" type="java.util.Date">
+			<column name="DATE">
+				<comment>日期</comment>
+			</column>
+		</property>
+		<property name="fax" type="java.lang.String">
+			<column name="FAX">
+				<comment>传真</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS">
+				<comment>状态</comment>
+			</column>
+		</property>
+		<property name="note" type="java.lang.String">
+			<column name="NOTE">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="invoiceAmount" type="java.lang.Double">
+			<column name="INVOICE_AMOUNT">
+				<comment>发票金额</comment>
+			</column>
+		</property>
+		<set name="otherPFProjectFees">
+			<key column="QUOTATION_ID"/>
+			<one-to-many class="com.etiansoft.ole.po.OtherPFProjectFee"/>
+		</set>
+	</class>
+</hibernate-mapping>

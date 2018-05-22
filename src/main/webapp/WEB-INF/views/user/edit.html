@@ -1,0 +1,85 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<@g.close />
+<body>
+	<form action="${ctx}/user/update" method="post" id="userForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "user.editUser" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<input type="hidden" value="${user.userCode}" name="userCode"/>
+			<input type="hidden" value="${user.createTime?date('yyyy-MM-dd')}" name="time"/>
+			<input type="hidden" value="<#if user.status>true<#else>false</#if>" name="status"/>
+			<table id="userEditTable" width="550">
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userName" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="name" value="${user.name}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userSex" />：</td>
+					<td><select class="form-control" name="sex">
+							<option value="false" <#if user.sex==false>selected="selected"</#if>><@m.m "sys.man" /></option>
+							<option value="true"  <#if user.sex==true>selected="selected"</#if>><@m.m "sys.women" /></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userPosition" />：</td>
+					<td><select name="type" class="form-control" id="type">
+							<#list roles as role>
+								<option value="${role.name}" <#if role.name==user.type>selected="selected"</#if>>${role.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<#if loginUser.boss>
+				<tr>
+					<td style="text-align: right;"><@m.m "user.salary" />：</td>
+					<td style="text-align: left;" class="controls"><input type="text" class="form-control" name="baseSalary" placeholder="0.0" value="${user.baseSalary}"></td>
+				</tr>
+				</#if>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.mobile" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="cellPhone" value="${user.cellPhone}" check-type="cellPhone" cellPhone-message="<@m.m 'global.cellPhoneError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "supplier.email" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="mail" value="${user.mail}" check-type="mail" mail-message="<@m.m 'global.mailError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "perfile.birthday" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 487px;">
+							<input class="form-control calculate" style="width: 453px;" size="16" type="text" style="cursor: pointer;" name="birth" value="${user.birthday}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.entryDate" />：</td>
+					<td style="text-align: left;">
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 457px;">
+							<input class="form-control calculate" style="cursor: pointer; width: 430px;" size="16" type="text" name="hiredate" value="${user.entryDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+			<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+	<script type="text/javascript">
+		$('#userForm').validation();
+		$('.clear_date').datetimepicker({
+			endDate: currentDate,
+			weekStart: 1,
+			todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+	</script>
+</body>
+</html>

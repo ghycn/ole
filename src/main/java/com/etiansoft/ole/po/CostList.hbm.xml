@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 成本分析表 -->
+	<class name="com.etiansoft.ole.po.CostList" table="COST_LIST">
+		<id name="costListCode" type="java.lang.String">
+			<column name="COST_LIST_CODE" />
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME">
+				<comment>案件名称</comment>
+			</column>
+		</property>
+		<property name="exetime" type="java.util.Date">
+			<column name="EXETIME">
+				<comment>案件执行时间</comment>
+			</column>
+		</property>
+		<property name="total" type="java.lang.Double">
+			<column name="TOTAL">
+				<comment>总金额</comment>
+			</column>
+		</property>
+		<property name="personliable" type="java.lang.String">
+			<column name="PERSONLIABLE">
+				<comment>案件主负责人</comment>
+			</column>
+		</property>
+		<property name="secondPerson" type="java.lang.String">
+			<column name="SECOND_PERSON">
+				<comment>案件次负责人</comment>
+			</column>
+		</property>
+		<property name="invoiceTitle" type="java.lang.String">
+			<column name="INVOICE_TITLE">
+				<comment>对方发票抬头</comment>
+			</column>
+		</property>
+		<property name="invoiceAddress" type="java.lang.String">
+			<column name="INVOICE_ADDRESS">
+				<comment>对方公司地址</comment>
+			</column>
+		</property>
+		<property name="dockingName" type="java.lang.String">
+			<column name="DOCKING_NAME">
+				<comment>对接人姓名</comment>
+			</column>
+		</property>
+		<property name="dockingTel" type="java.lang.String">
+			<column name="DOCKING_TEL">
+				<comment>对接人电话</comment>
+			</column>
+		</property>
+		<one-to-one name="activityCode"/>
+		<set name="itemCode">
+			<key column="ITEM_CODE"/>
+			<one-to-many class="com.etiansoft.ole.po.CostListItem"/>
+		</set>
+	</class>
+</hibernate-mapping>

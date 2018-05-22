@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 用户 -->
+	<class name="com.etiansoft.ole.po.SysUser" table="SYS_USER">
+		<id name="userCode" type="java.lang.String">
+			<column name="USER_CODE" />
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="PASSWORD">
+				<comment>密码</comment>
+			</column>
+		</property>
+		<property name="sex" type="boolean">
+			<column name="SEX" not-null="true">
+				<comment>性别</comment>
+			</column>
+		</property>
+		<property name="birthday" type="java.util.Date">
+			<column name="BIRTHDAY">
+				<comment>生日</comment>
+			</column>
+		</property>
+		<property name="headIcon" type="java.lang.String">
+			<column name="HEAD_ICON">
+				<comment>头像</comment>
+			</column>
+		</property>
+		<property name="idNum" type="java.lang.String">
+			<column name="ID_NUM">
+				<comment>身份证号</comment>
+			</column>
+		</property>
+		<property name="tel" type="java.lang.String">
+			<column name="TEL" length="30">
+				<comment>座机</comment>
+			</column>
+		</property>
+		<property name="cellPhone" type="java.lang.String">
+			<column name="CELL_PHONE">
+				<comment>手机</comment>
+			</column>
+		</property>
+		<property name="mail" type="java.lang.String">
+			<column name="MAIL">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+		<property name="zipCode" type="java.lang.String">
+			<column name="ZIP_CODE">
+				<comment>邮编</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="type" type="java.lang.String">
+			<column name="TYPE" not-null="true">
+				<comment>类别(0老板, 1非设计类员工, 2设计类员工)</comment>
+			</column>
+		</property>
+		<property name="status" type="boolean">
+			<column name="STATUS" not-null="true">
+				<comment>状态(1启用, 0锁定)</comment>
+			</column>
+		</property>
+		<property name="lastLoginTime" type="java.sql.Timestamp">
+			<column name="LAST_LOGIN_TIME">
+				<comment>最后登入时间</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.util.Date">
+			<column name="CREATE_TIME" not-null="true">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="baseSalary" type="double">
+			<column name="BASE_SALARY" not-null="true">
+				<comment>基础工资</comment>
+			</column>
+		</property>
+		<property name="entryDate" type="java.util.Date">
+			<column name="ENTRY_DATE">
+				<comment>入职日期</comment>
+			</column>
+		</property>
+		<property name="workDate" type="java.util.Date">
+			<column name="WORK_DATE">
+				<comment>到职日期</comment>
+			</column>
+		</property>
+		<property name="workAge" type="java.lang.Integer">
+			<column name="WORK_AGE">
+				<comment>工龄</comment>
+			</column>
+		</property>
+		<property name="vacationDays" type="java.lang.Integer">
+			<column name="VACATION_DAYS">
+				<comment>年假</comment>
+			</column>
+		</property>
+		<property name="admin" type="boolean">
+			<column name="admin" not-null="true">
+				<comment>是否管理员(0否、1是)</comment>
+			</column>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE">
+				<comment>逻辑删除</comment>
+			</column>
+		</property>
+		<set name="roles" table="SYS_USER_ROLE">
+			<key column="USER_CODE" />
+			<many-to-many class="com.etiansoft.ole.po.SysRole" column="ROLE_ID"/>
+		</set>
+		<set name="projects" table="SYS_USER_PROJECT" fetch="join" lazy="false">
+			<key column="USER_CODE" />
+			<many-to-many class="com.etiansoft.ole.po.PrProject" column="PROJECT_CODE"/>
+		</set>
+	</class>
+</hibernate-mapping>

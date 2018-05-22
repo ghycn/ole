@@ -1,0 +1,38 @@
+@charset "utf-8";
+/* CSS Document */
+.welcome {
+	margin: 20px 0px;;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0 2% 2% 2%;
+	border-bottom: 1px dotted #ff6600;
+	color: #ff6600;
+}
+
+.indexlist {
+	padding: 0px 2px;
+	border-right: 1px solid #ff6600;
+	position: relative;
+	float: left;
+	width: 200px;
+}
+
+.leftpad {
+	margin-left: 2%;
+	border-left: 1px solid #ff6600;
+}
+
+.indexlist span {
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	height: 50px;
+	background: url(../img/orangebig.jpg) repeat-x bottom;
+	color: #ff6600;
+	line-height: 50px;
+}
+
+.indexlist table tr td {
+	height: 25px;
+	line-height: 25px;
+}

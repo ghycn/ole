@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:mvc="http://www.springframework.org/schema/mvc" 
+		xmlns:util="http://www.springframework.org/schema/util" 
+		xmlns:aop="http://www.springframework.org/schema/aop" 
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:task="http://www.springframework.org/schema/task" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/task    
+		http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<context:annotation-config />
+	<task:annotation-driven/> 
+	<context:component-scan base-package="com.etiansoft.ole" />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:property-placeholder location="classpath:database.properties,classpath:constants.properties" />
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<ref bean="stringHttpMessageConverter" />
+			<ref bean="byteArrayHttpMessageConverter" />
+			<ref bean="resourceHttpMessageConverter" />
+			<ref bean="sourceHttpMessageConverter" />
+			<ref bean="xmlAwareFormHttpMessageConverter" />
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean id="stringHttpMessageConverter" class="com.etiansoft.tools.web.StringHttpMessageConverter" />
+	<bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	<bean id="resourceHttpMessageConverter" class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+	<bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+	<bean id="xmlAwareFormHttpMessageConverter" class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.etiansoft.ole.filter.LocaleChangeInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.etiansoft.ole.index.interceptor.LoginInterceptor">
+				<property name="excludeUrls">
+					<list>
+						<value>/login</value>
+						<value>/login.html</value>
+						<value>/logout</value>
+						<value>/logout.html</value>
+						<value>/403</value>
+						<value>/403.html</value>
+						<value>/404</value>
+						<value>/404.html</value>
+						<value>/500</value>
+						<value>/500.html</value>
+						<value>/script/language.js</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="zh_TW" />
+	</bean>
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="0" />
+		<property name="basenames">
+			<list>
+				<value>/WEB-INF/languages/messages</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="1555552428800" />
+	</bean>
+
+	<mvc:resources mapping="/static/script/**" location="/script/" />
+	<mvc:resources mapping="/static/css/**" location="/css/" />
+	<mvc:resources mapping="/static/images/**" location="/images/" />
+	<mvc:resources mapping="/static/validator/**" location="/validator/" />
+	<mvc:resources mapping="/static/component/**" location="/component/" />
+	<mvc:resources mapping="/static/upload/**" location="/upload/" />
+	<mvc:resources mapping="/static/bootstrap/**" location="/bootstrap/" />
+	<mvc:resources mapping="/static/bower_components/**" location="/bower_components/" />
+
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="configLocation" value="classpath:ftl.properties" />
+		<property name="templateLoaderPath" value="/WEB-INF/views" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="locale">zh_CN</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="prefix" value="" />
+		<property name="cache" value="true" />
+		<property name="suffix" value=".html" />
+	</bean>
+</beans>

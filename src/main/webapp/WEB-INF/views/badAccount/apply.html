@@ -1,0 +1,51 @@
+<@g.docType />
+<html>
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<body>
+	<form action="${ctx}/badAccount/apply/addOrUpdate" id="badApply" method="post" style="margin:0px 20px;">
+		<@g.close />
+		<#if badAccount.badId??>
+				<div style="text-align: center;font-size: 16px;font-weight: bolder;margin: 10px auto;"><@m.m "bad.editAccount" /></div>
+		<#else>
+				<div style="text-align: center;font-size: 16px;font-weight: bolder;margin: 10px auto;"><@m.m "bad.addAccount" /></div>
+		</#if>
+		<table class="tables" style="width: 80%;text-align: center;margin-left: 40px;">
+			<tr>
+				<td style="text-align:right;width:100px;"><@m.m "quotation.name" />：</td>
+				<td>
+					<input type="hidden" value="${badAccount.badId}" name="badId"/>
+					<select class="form-control" name="quotation.quotationId">
+						<#list quotations as quotation>
+							<option value="${quotation.quotationId}" <#if badAccount.quotationId==quotation.quotationId>selected="selected"</#if>>${quotation.quotationName}</option>
+						</#list>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;"><@m.m "quotation.reason" />：</td>
+				<td class="controls">
+					<input class="form-control" type="text" placeholder="<@m.m "quotation.reason" />" value="${badAccount.reason}" name="reason" check-type="required" required-message="<@m.m 'global.notNull' />"/>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;"><@m.m "projectFee.money" />：</td>
+				<td class="controls">
+					<input class="form-control" placeholder="0" type="text" value="<#if badAccount.total??>${badAccount.total?string('#.##')}</#if>" name="total" check-type="number" required-message="<@m.m 'global.numberError' />" />
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:right;"><@m.m "global.note" />：</td>
+				<td><textarea class="form-control" placeholder="<@m.m "global.note" />" rows="3" name="note" value="${badAccount.note}">${badAccount.note}</textarea></td>
+			</tr>
+		</table>
+		<div style="margin: 20px 0;text-align: center;width: 100%;">
+			<#if badAccount.badId??>
+				<input type="submit" value="<@m.m 'global.edit' />" class="btn btn-default"/>
+				<#else>
+				<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default"/>
+			</#if>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+		</div>
+	</form>
+</body>
+</html>

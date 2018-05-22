@@ -1,0 +1,41 @@
+<@g.docType />
+<html>
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/apply.js"></script>
+<body>
+	<form action="${ctx}/wkOvertime/apply/addOrUpdate" method="post" id="WkOverCh" style="margin:0px 20px;">
+		<@g.close />
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;margin: 10px auto;"><@m.m "wkOvertime.application" /></div>
+		<table class="tables" style="width: 90%;text-align: center;margin-left: 20px;">
+			<tr>
+				<td><@m.m "wkLeave.startDate" />：</td>
+				<td>
+					<input class="form-control calculate" size="16" type="text" style="cursor: pointer;" name="start" value="${wKOvertime.startDate?string('yyyy-MM-dd')}" readonly>
+				</td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.endDate" />：</td>
+				<td>
+					<input class="form-control calculate" size="16" type="text" style="cursor: pointer;" name="start" value="${wKOvertime.endDate?string('yyyy-MM-dd')}" readonly>
+				</td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.appDays" />：</td>
+				<td>
+					<input class="form-control calculate" size="16" type="text" style="cursor: pointer;" name="start" value="${wKOvertime.duration}" readonly>
+				</td>
+			</tr>
+			<tr>
+					<td ><@m.m "customer.approver" />：</td>
+					<td class="controls">
+						<input class="form-control calculate"  value="${wKOvertime.approvalOfPersonnelName}" readonly>
+					</td>
+			</tr>
+			<tr>
+				<td><@m.m "global.note" />:</td>
+				<td align="left"><textarea rows="6" readonly  cols="50" name="notes" id="notes"  class="form-control">${wKOvertime.notes}</textarea></td>
+			</tr>
+			<tr></tr>
+		</table>
+	</form>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<@g.docType />
+<html>
+<@g.head title="menu.applyForFunds">
+<script type="text/javascript"
+	src="${ctx}/static/script/projectFee/applyList.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+</@g.head>
+<body>
+	<@g.top /> <@g.nav />
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="tabs-search">
+					<@g.nav_tabs
+					names="wkLeave.ApplicationForLeave,wkOvertime.application,menu.applyForFunds"
+					urls="/wkLeave/applyList,/wkOvertime/applyList,/projectFee/applyList"
+					active="menu.applyForFunds"/>
+					<div class="tableSearch" style="width: 100%;">
+<!-- 						<input type="hidden" value="${loginUser.userCode}" id="userCode" /> -->
+<!-- 						<label><@m.m "projectFee.type" />:</label> <input -->
+<!-- 							class="form-control input-sm" id="type" name="type" -->
+<!-- 							style="width: 100px; display: inline;">  -->
+							<label
+							style="float: left; height: 30px; line-height: 30px; margin-right: 8px;"><@m.m
+							"projectFee.moneyScope" />:</label> <select name="selectDropDown"
+							id="selectDropDown" class="form-control"
+							style="height: 30px; width: 150px; float: left; margin-right: 10px;">
+							<option selected="true" value="0"><@m.m
+								"holiday.whole"/></option>
+							<option value="1">1-100</option>
+							<option value="2">101-1000</option>
+							<option value="3">1001-10000</option>
+							<option value="4">10000以上</option>
+						</select>
+						<label
+							style="float: left; height: 30px; line-height: 30px; margin-right: 8px;"><@m.m "caselist.status"/>:</label>
+						<select name="projectState" id="projectState" class="form-control" style="height: 30px; width: 150px; float: left; margin-right: 10px;">
+							<option value="0"><@m.m "holiday.whole"/></option>
+							<option value="1"><@m.m "caselist.caseClosed"/></option>
+							<option selected="true" value="2"><@m.m "caselist.caseOpen"/></option>
+						</select>
+						<button class="btn btn-default btn-sm" type="button"
+							onclick="search('projectFee-dataTable')"><@m.m
+							"global.query" /></button>
+				<!-- 		<input type="button" value="<@m.m 'projectFee.addApply' />"
+							class="btn btn-default btn-sm" data-toggle="modal"
+							data-target="#modalDiv" data-backdrop="static"
+							href="${ctx}/projectFee/apply/add" /> -->
+					</div>
+				</div>
+				<@g.modal id="modalDiv"/><@g.modal id="modalDiv2" width="1200"/><@g.modal id="modalDiv3" />
+				<@g.modal id="modalDiv4" />
+				<div class="panel-body">
+					<table class="table table-striped table-bordered table-hover"
+						id="projectFee-dataTable" myRp="g"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

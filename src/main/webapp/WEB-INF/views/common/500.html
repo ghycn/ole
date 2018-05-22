@@ -1,0 +1,29 @@
+<@g.docType />
+<html>
+<head>
+<link href="${ctx}/static/css/error.css" rel="stylesheet">
+</head>
+<body>
+<div id="Container" class="Container">
+<h1>500</h1>
+<table>
+	<tr>
+		<td colspan="2" class="t">500,服务器内部错误</td>
+	</tr>
+	<tr class="trBac">
+		<td><a href="${ctx}">回到主页<span>&gt;</span></a></td>
+	</tr>
+	<tr class="trBac">
+		<td><a href="#">联系我们<span>010-1234567 &gt;</span></a></td>
+	</tr>
+</table>
+</div>
+</body>
+</html>
+<pre>
+服务器内部错误，异常信息：
+${message}
+
+堆栈信息：
+${stackTrace}
+</pre>

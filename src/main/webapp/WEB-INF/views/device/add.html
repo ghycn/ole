@@ -1,0 +1,89 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<!-- <script type="text/javascript" src="${ctx}/static/script/global.js"></script> -->
+<@g.close />
+<body>
+	<form action="${ctx}/device/save" method="post" id="userFormT"
+		myForm="j&p">
+		<div style="text-align: center; font-size: 16px; font-weight: bolder;"><@m.m
+			"device.addDevice" /></div>
+		<div class="tab-content"
+			style="text-align: center; padding-bottom: 5px;">
+			<table id="userAddTable" style="margin-left: 45px;">
+				<tr>
+					<td style="text-align: right;"><@m.m "device.name" />：</td>
+					<td class="controls" width="85%"><input type="text"
+						placeholder="<@m.m 'device.name' />" class="form-control"
+						name="name" check-type="required"
+						required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.total" />：</td>
+					<td class="controls"><input type="text"
+						placeholder="<@m.m 'global.numberError' />" class="form-control"
+						name="total" check-type="number"
+						number-message="<@m.m 'global.numberError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.buyingTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5"
+							data-date-format="yyyy-mm-dd" style="width: 400px;">
+							<input class="form-control calculate" size="16"
+								style="width: 360px; cursor: pointer;" type="text" id="buyTime"
+								name="buyTime" value="${currentDate}"
+								onblur="checkDateInput(this)" readonly> <span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.expirationDate"
+						/>：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5"
+							data-date-format="yyyy-mm-dd" style="width: 400px;">
+							<input class="form-control calculate" size="16"
+								style="width: 360px; cursor: pointer;" type="text"
+								id="expireDate" name="expireDate" value="${currentDate}"
+								readonly> <span class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.save' />"
+				class="btn btn-default" style="margin: 10px 0;" onclick="checkedDate()"/>
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+$(function(){
+	$('.clear_date').datetimepicker({
+		//startDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+
+
+})
+
+
+function checkedDate(){
+	var buyTime=$('#buyTime').val().replace(/-/g,"/");
+	var expireDate=$('#expireDate').val().replace(/-/g,"/");
+	if(expireDate<=buyTime){
+		alert(i18n('device.checkDate'));
+		return false;
+	}
+	$('#userFormT').submit();
+}
+</script>
+</html>

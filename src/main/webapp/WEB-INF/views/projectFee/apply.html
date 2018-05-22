@@ -1,0 +1,239 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/bootstrap-multiselect.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/tree/skin/ui.dynatree.css?v=1.0" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/bootstrap-multiselect.js"></script>
+<!-- <script type="text/javascript" src="${ctx}/static/script/projectFee/apply.js"></script> -->
+<script type="text/javascript" src="${ctx}/static/bower_components/tree/jquery.dynatree.min.js"></script>
+<link href="${ctx}/static/css/apply.css?v=1.0" rel="stylesheet">	
+	
+	
+	<!-- <link rel="stylesheet" href="${ctx}/static/bower_components/zTree/css/demo.css" type="text/css"> -->
+	<link rel="stylesheet" href="${ctx}/static/bower_components/zTree/css/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="${ctx}/static/bower_components/zTree/js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="${ctx}/static/bower_components/zTree/js/jquery.ztree.core-3.5.js"></script>
+	<script type="text/javascript" src="${ctx}/static/bower_components/zTree/js/jquery.ztree.excheck-3.5.js"></script>
+	<style>
+		ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:380px;height:180px;overflow-y:scroll;overflow-x:auto;}	
+	</style>
+<body>
+	<form action="${ctx}/projectFee/apply/addOrUpdate" method="post"  id="ProjectFeeCh">
+		<@g.close />
+		<div
+			style="text-align: center; font-size: 16px; font-weight: bolder; margin: 10px auto;"><@m.m
+			"menu.applyForFunds" /></div>
+			<input type="hidden" value="${projectFee.projectFeeId}" 
+					name="projectFeeId" id="projectFeeId" />
+        <div class="title"></div>
+        
+        <div class="c_name">
+					 <div class="left"><@m.m "susupplier.classification" />：</div>
+					<div class="right">
+						<select class="form-control" id="supplierType" onchange="createSupplierSelect(this.value);"> 
+								<option value="" ><@m.m 'global.pleaseChoose'/></option>
+							    <#list supplierTypeList as supplierType>
+									<option value="${supplierType.name}">${supplierType.name}</option>
+								</#list>
+						</select>
+					</div>
+				</div>
+        
+        <div class="c_name">
+            <div class="left"><@m.m "projectFee.quotationName"
+					/>：</div>
+            <div class="right"><input type="hidden" value="${quotationId}"
+					name="quotationId" /><select class="form-control" name="supplierCode" id="supplierCode">
+						<#list suppliers as supplier>
+						<option value="${supplier.supplierCode}"<#if
+							projectFee.supplier!=null&supplier.supplierCode==projectFee.supplier.supplierCode>selected="selected"</#if>>${supplier.name}</option>
+						</#list>
+				</select></div>
+        </div>
+         <div class="c_name"  style="height:200px;width:600px">
+            <div class="left"><@m.m "projectFee.type" />：</div>
+            <div class="right">
+            <input type="hidden" id="quotationIds" name="quotationIds"
+						value="${quotationIds}"	/>
+   <!--          <input type="hidden" id="quotationIds" name="quotationIds"
+							value="${quotationIds}" />
+ 					<div id="permissionTree" style="overflow: relative; width: 400px; height: 200px;"margin-left:55px;>
+
+ 					</div> -->
+ 					
+ 				<div class="zTreeDemoBackground left">
+					<ul id="treeDemo" class="ztree"></ul>
+				</div>	
+ 				</div>
+        </div>
+        <div class="c_name">
+            <div class="left"><@m.m "projectFee.remainingAmount" />：</div>
+            <div class="right"><input type="text" placeholder="0.0" readonly
+					class="form-control" name="" value="${remainingAmount}" id="remainingAmount"
+					></div>
+        </div>
+         <div class="c_name">
+            <div class="left"><@m.m "projectFee.money" />：</div>
+            <div class="right"><input type="text" placeholder="<@m.m "projectFee.moneyHint" />"
+					class="form-control" name="amount"
+					value="<#if projectFee.amount??>${projectFee.amount?string('##0.00#')}</#if>"
+					 pattern="^\d+(\.\d+)?$" required-message="<@m.m 'global.numberError'/>"></div>
+        </div>
+         <div class="c_name">
+            <div class="left"><@m.m "projectFee.applyTime" />：</div>
+            <div class="right">		
+            		<div class="input-group date clear_date col-md-5"  data-date-format="yyyy-mm-dd" style="width: 400px;">
+						<input class="form-control" size="16" type="text" style="cursor: pointer; width: 375px;" name="applydate"
+							value="<#if projectFee.applyDate??>${projectFee.applyDate?string('yyyy-MM-dd')}<#else>${currentDate}</#if>" readonly>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+					</div>
+			</div>
+        </div>
+         <div class="c_name">
+            <div class="left"><@m.m "projectFee.info" />：</div>
+            <div class="right"><input type="text" placeholder="<@m.m "projectFee.info" />"
+					class="form-control" name="name" value="${projectFee.name}"></div>
+        </div>
+         <div class="c_name" style="height:75px;">
+            <div class="left"><@m.m "global.note" />：</div>
+            <div class="right"><textarea class="form-control" placeholder="<@m.m "global.note" />"
+					rows="3" name="notes"
+					value="${projectFee.notes}">${projectFee.notes}</textarea></div>
+        </div>
+		<div style="margin: 20px 0; text-align: center; width: 100%;">
+			<#if projectFee.projectFeeId??> <input type="submit" onclick="return checkSupplierName();" value="<@m.m 'global.edit' />" class="btn btn-default" /> 
+				<#else> <input type="submit" onclick="return checkSupplierName();"  value="<@m.m 'global.save' />" class="btn btn-default" />
+			</#if> <input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal" />
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+
+var quotationId=${quotationId};
+var setting = {
+		view: {
+			selectedMulti: false
+		},
+		check: {
+			enable: true
+		},
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+        callback:{
+        	beforeCheck: beforeCheck,
+            onCheck:onCheck
+        }
+
+	};
+var className = "dark";
+function beforeCheck(treeId, treeNode) {
+	return (treeNode.doCheck !== false);
+}
+
+function onCheck(e,treeId,treeNode){
+ 	var id="";
+ 	var ids="";
+	    var treeObj=$.fn.zTree.getZTreeObj("treeDemo");
+	    nodes=treeObj.getCheckedNodes(true);
+	    var checked=treeNode.checked;
+	    id=treeNode.id;
+	    ids=document.getElementById("quotationIds").value;
+
+	   var str='';
+	   $.ajax({
+			type: "POST",
+			dataType: "json",
+			url: ctx+'/projectFee/apply/treeNodes?quotationId='+quotationId+'&id='+id+"&ids="+ids+"&checked="+checked,
+			async: false,
+			success:function(data){
+					$.fn.zTree.init($("#treeDemo"), setting, data);
+					nodes=treeObj.getCheckedNodes(true);
+				    for(var i=0;i<nodes.length;i++){
+				    	if(nodes[i].children==null){
+				    		if(nodes[i].checked){
+				    			str += (nodes[i].id+",");
+				    		}else{
+				    			document.getElementById("quotationIds").value="";
+				    		}
+				    	}
+				    }
+				    if(nodes.length==0){
+				    	document.getElementById("quotationIds").value="";
+				    }else{
+				  	 document.getElementById("quotationIds").value=str;
+				    }
+			}
+		}); 
+		//str 是报价项的id 
+		var amount = "";   
+		var projectFeeId = $("#projectFeeId").val();
+		  $.ajax({
+			type: "POST",
+			dataType: "json",
+			url: ctx+'/projectFee/queryQuotationListAmount?str='+str+'&projectFeeId='+projectFeeId,
+			async: false,
+			success:function(data){
+				amount = data;
+			}
+		}); 
+		$("#remainingAmount").val(amount);
+	}
+	$(document).ready(function(){
+	 	var id="";
+	 	var ids="";
+		ids=document.getElementById("quotationIds").value;
+		var checked=false;
+		if(ids!=null&&ids!=""){
+			checked=true;
+		}
+		$.ajax({
+			type: "POST",
+			dataType: "json",
+			url: ctx+'/projectFee/apply/treeNodes?quotationId='+quotationId+'&id='+id+"&ids="+ids+"&checked="+checked,
+			success:function(data){
+				$.fn.zTree.init($("#treeDemo"), setting, data);
+			}
+		}); 
+	});
+	 function createSupplierSelect(type){
+ 		var type =  encodeURI(encodeURI(type));
+		var url = ctx+"/quotationItem/querySuppliers?type="+type;
+		 $.ajax({   
+		        async : false,   
+		        cache:false, 
+		        type: 'POST',
+		        url: url, //请求的action路径    
+		        error: function () {//请求失败处理函数   
+		        },   
+		        success:function(data){ //请求成功后处理函数。    
+		        	var list = eval(data);
+		        	var obj=document.getElementById('supplierCode');
+		        	obj.options.length = 0;
+		        	obj.options.add(new Option(i18n('global.pleaseChoose'),"")); //这个兼容IE与firefox
+		        	for(var i = 0;i<list.length;i++){
+		        		obj.options.add(new Option(list[i]["name"],list[i]["supplierCode"])); //这个兼容IE与firefox
+		        	}
+		        }
+		 });
+ }
+ function checkSupplierName(){
+ 		var str = $('#supplierCode').val();
+		if(str==""||str==null){
+			alert(i18n('supplier.notNull'));
+			return false;
+		}else{
+			var obj=document.getElementById('supplierCode');
+			var index=obj.selectedIndex; //序号，取当前选中选项的序号
+			var supplierName = obj.options[index].text;
+		    if(confirm(i18n('projectFee.choose')+supplierName+"?")){
+		    	return true;
+		    }else{
+				return false;
+		    }
+		}
+ }
+</script>
+</html>

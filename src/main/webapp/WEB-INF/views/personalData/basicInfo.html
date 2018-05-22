@@ -1,0 +1,136 @@
+<@g.docType />
+<html>
+<@g.head title="menu.staffProfile">
+<link href="${ctx}/static/css/personalData/basicInfo.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/personalData/basicInfo.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs 
+					names="menu.staffProfile,menu.equipmentUsedList,menu.leaveSubtotal,menu.casesList,menu.changePassword" 
+					urls="/personalData/basicInfo,/device/usedList,/personalData/leaveSubtotal,/personalData/caseList,/personalData/changePassword" 
+					active="menu.staffProfile"/>
+			</div>
+			<div class="formDiv">
+<!-- 			${ctx}/personalData/basicInfoEdit -->
+				<form method="post" id="basicInfoForm" myForm="j&p" style="border-radius:8px">
+					<table id="basicInfoTable">
+						<tr>
+							<td colspan="3" style="text-align: center;">
+								<span class="title"><@m.m "profile.staffProfile" /></span>
+							</td>
+						</tr>
+						<tr>
+							<td><@m.m "profile.serialNumber" />：</td>
+							<td>
+								${loginUser.userCode}
+								<input type="hidden" value="${loginUser.userCode}" name="userCode"/>
+							</td>
+							<td colspan="3" style="display: none;">
+								<input type="hidden" name="headIcon" value="<#if headIcon??>${headIcon}<#else>${loginUser.headIcon}</#if>">
+							</td>
+							<td rowspan="14" valign="top" class="step2" style="width: 100px;">
+								<img class="headPortrait img-responsive" src="<#if headIcon??>${ctx}/getHeadIcon?path=${headIcon}<#elseif loginUser.headIcon?? && loginUser.headIcon!=''>${ctx}/getHeadIcon?path=${loginUser.headIcon}<#else>${ctx}/static/images/headIcon.png</#if>" width="100" height="100" onclick="javascript:$('#image_file').click();" />
+							</td>
+						</tr>
+						<tr>
+							<td><@m.m "customer.fullName" />：</td>
+							<td class="controls"><input type="text" class="form-control" name="name" check-type="required" required-message="<@m.m 'global.notNull' />" value="${loginUser.name}" /></td>
+						</tr>
+						<tr>
+							<td><@m.m "sys.userSex" />：</td>
+							<td>
+								<select class="form-control" name="sex">
+									<option value="0"><@m.m "perfile.man" /></option>
+									<option value="1" <#if loginUser.sex>selected="selected"</#if>><@m.m "perfile.woman" /></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><@m.m "perfile.office" />：</td>
+							<td>
+								${loginUser.type}
+							</td>
+						</tr>
+						<tr>
+							<td><@m.m "customer.tel" />：</td>
+							<td class="controls"><input type="text" class="form-control" name="tel" check-type="tel" tel-message="<@m.m 'global.telError'/>" value="${loginUser.tel}"/></td>
+						</tr>
+						<tr>
+							<td><@m.m "customer.mobile" />：</td>
+							<td class="controls"><input type="text" class="form-control" name="cellPhone" check-type="cellPhone" cellPhone-message="<@m.m 'global.cellPhoneError'/>" value="${loginUser.cellPhone}"/></td>
+						</tr>
+						<tr>
+							<td><@m.m "customer.email" />：</td>
+							<td class="controls"><input type="text" class="form-control" name="mail" check-type="mail" mail-message="<@m.m 'global.mailError' />" value="${loginUser.mail}" check-type="mail" mail-message="<@m.m 'global.mailError' />"></td>
+						</tr>
+						<tr>
+							<td><@m.m "perfile.birthday" />：</td>
+							<td class="controls">
+								<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 340px;">
+									<input class="form-control calculate" size="16" type="text" name="birth" style="cursor: pointer;width:300px;" value="<#if user.birthday??>${user.birthday?string('yyyy-MM-dd')}<#else>${currentDate}</#if>">
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><@m.m "perfile.workTime" />：</td><td>${month}个月</td>
+<!-- 							<td class="controls"><input type="text" class="form-control" name="workDate" id="workDate" value="${month}个月"</td> -->
+						</tr>
+						<tr id="editTr">
+							<td colspan="2" style="text-align: right;">
+								<input type="button" value="<@m.m 'perfile.modifyData' />" class="btn btn-default" onclick="editInfo();"/>
+							</td>
+						</tr>
+						<tr style="display: none;" id="saveTr">
+							<td colspan="2" style="text-align: right;">
+								<input type="button" onclick="clickSave();" value="<@m.m 'global.save' />" class="btn btn-default"/>
+								<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" onclick="cancel();"/>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<form action="${ctx}/personalData/uploadHeadIcon" method="post" enctype ="multipart/form-data" id="uploadForm">
+	<input type="hidden" name="x" id="x"/>
+	<input type="hidden" name="y" id="y"/>
+	<input type="hidden" name="w" id="w"/>
+	<input type="hidden" name="h" id="h"/>
+	<div style="display: none;">
+		<input type="file" name="file" id="image_file" onchange="fileSelectHandler();">
+		<input type="button" data-toggle="modal" data-target="#modalDiv" id="imgButton"/>
+	</div>
+</form>
+<div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ondblclick="$('#uploadForm').submit();">
+	<div class="modal-dialog" id="imgDialog">
+		<div class="modal-content" style="posision:relative;text-align: center;" id="imgContent"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.clear_date').datetimepicker({
+		endDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+	function clickSave(){
+		document.getElementById("basicInfoForm").action=ctx+'/personalData/basicInfoEdit';
+// 		alert(document.getElementById("basicInfoForm").action);
+		document.getElementById("basicInfoForm").submit();
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<link href="${ctx}/static/css/cost/coseAnalysis.css" rel="stylesheet">
+	<script type="text/javascript"
+	src="${ctx}/static/script/projectFee/applyFeeList.js"></script>
+<script type="text/javascript">var ctx = "${ctx}";</script>
+<@g.close/>
+<h2 style="text-align: center;"><@m.m "projectFee.viewProjectFee"/></h2>
+<div id="coseAnalysisDiv"
+	style="margin-top: 10px; padding: 30px 20px 245px 20px;">
+				<input type="hidden" value="${quotationId}"
+					name="quotationId" id="quotationId" />
+	<table style="margin-top: 23px;" class="quotation">
+		<tr>
+			<th><@m.m "projectFee.quotationName"/></th>
+			<th><@m.m "wkLeave.applicant"/></th>
+			<th><@m.m "projectFee.money"/></th>
+			<th><@m.m "projectFee.applyTime"/></th>
+			<th><@m.m "projectFee.info"/></th>
+			<th><@m.m "projectFee.type"/></th>
+			<th><@m.m "global.note"/></th>
+			<th><@m.m "global.status"/></th>
+			<th><@m.m "global.opera"/></th>
+		</tr>
+		<#if pfFeeList??> <#list pfFeeList as fee>
+		<tr>
+			<td>${fee.supplierName}</td>
+			<td>${fee.applicantName}</td>
+			<td>${fee.amount}</td>
+			<td><#if fee.applyDate??>${fee.applyDate}</#if></td>
+			<td>${fee.name}</td>
+			<td><a onclick="showTypes('${fee.type}')";>${fee.type}</a></td>
+			<td>${fee.notes}</td>
+			<td><#if fee.status==0> <@m.m "global.audit"/> <#elseif
+				fee.status==1> <span style="color: green; font-size: 18px;">√&nbsp;&nbsp;</span><@m.m
+				"global.approve"/> <#elseif fee.status==2> <span
+				style="color: red; font-size: 18px;">×&nbsp;&nbsp;</span><@m.m
+				"global.reject"/> <#elseif fee.status==3> <@m.m "global.invalid"/>
+				</#if>
+			</td>
+			<td>
+			<#if fee.status==0&&(costStatus==0||costStatus==null)>
+
+					<#if fee.supplierName==null>
+					<input class="btn btn-default btn-sm"  style="width: 50%; float: left; cursor: pointer;"
+					data-toggle="modal" data-target="#modalDiv4" data-backdrop="static"
+					href="${ctx}/projectFee/otherApply/edit?projectFeeId=${fee.projectFeeId}" type="button" value="<@m.m 'global.edit'/>"/>
+					</#if> 
+					<#if fee.supplierName!=null>
+				    <input class="btn btn-default btn-sm modalDiv"  style="width: 50%; float: left; cursor: pointer;"
+					data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+					href="${ctx}/projectFee/apply/edit?projectFeeId=${fee.projectFeeId}&timeStmp=${fee.index+1}" type="button" value="<@m.m 'global.edit'/>"  <#if fee.status==2>disabled="disabled"</#if>/>
+					</#if> 
+					<input class="btn btn-default btn-sm"  style="width: 50%; float: left; cursor: pointer;"
+					data-toggle="modal" data-backdrop="static"
+					onclick="doDelete(this,'${fee.projectFeeId}');" type="button" value="<@m.m 'global.delete'/>"/>	
+			</#if> 
+			</td>
+		</tr>
+		</#list> </#if>
+	</table>
+</div>
+<script type="text/javascript">
+// $(function() {
+// 	$('#modalDiv3').on('hide.bs.modal', function() {
+// 	    $(this).removeData('bs.modal');
+
+// 	});
+
+// });
+function doDelete(n,pfProjectFeeId){
+	var quotationId=$("#quotationId").val();
+	var flag=window.confirm(i18n('global.deleteConfirm'));
+ 	if(flag){
+		$.ajax({
+			type: "POST",
+			dataType: "text",
+			data : {'pfProjectFeeId':pfProjectFeeId,'quotationId':quotationId},
+			url: ctx + '/projectFee/apply/doDelete',
+			success:function(){
+				$(n).parent().parent().remove();
+				//amountCalculation();
+			}
+		});
+	} 
+}
+
+function showTypes(type){
+	var types = type.split(",");
+	var td = '';
+		for(var i=0;i<types.length;i++){
+			td+=types[i]+"\n";
+		}
+	alert(td)	;
+}
+</script>

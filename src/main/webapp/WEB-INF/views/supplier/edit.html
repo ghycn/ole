@@ -1,0 +1,122 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/supplier/supplier.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/supplier/update" method="post" style="margin-left: 70px;" id="supplierForm">
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "supplier.editSupplier" /></div>
+		<ul class="nav nav-tabs" id="supplierTab">
+			<li><a href="#supplierInfo"><@m.m "supplier.info" /></a></li>
+			<li><a href="#supplierContact"><@m.m "supplier.contactPerson" /></a></li>
+		</ul>
+		<input type="hidden" value="${supplier.status}" id="supplierStatus"/>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<div class="tab-pane active" id="supplierInfo">
+				<table id="supplierEditTable" style="width: 550px;border: 1px solid  #999;">
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.type" />：</td>
+						<td>
+							<select class="form-control" name="type" id="type">
+								<#list types as type>
+									<option value="${type.name}" <#if type.name==supplier.type>selected="selected"</#if>>${type.name}</option>
+								</#list>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.name" />：</td>
+						<td class="controls">
+							<input type="hidden" name="supplierCode" value="${supplier.supplierCode}"/>
+							<input type="text" class="form-control" name="name" value="${supplier.name}" check-type="required" required-message="<@m.m 'global.notNull' />">
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.address" />：</td>
+						<td class ="controls"><input type="text" class="form-control" name="address" check-type="required" required-message="<@m.m 'global.notNull' />" value="${supplier.address}"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.officialWebsite" />：</td>
+						<td class= "controls"><input type="text" class="form-control" name="officialWebsite" check-type="web" web-message="<@m.m 'global.webSiteError' />" value="${supplier.officialWebsite}"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.bankAccount" />：</td>
+						<td><input type="text" class="form-control" name="bankAccount" value="${supplier.bankAccount}"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.bankName" />：</td>
+						<td><input type="text" class="form-control" name="bankName" value="${supplier.bankName}"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.branchName" />：</td>
+						<td><input type="text" class="form-control" name="branchName" value="${supplier.branchName}"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.accountName" />：</td>
+						<td><input type="text" class="form-control" name="accountName" value="${supplier.accountName}"></textarea>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "supplier.note" />：</td>
+						<td><textarea class="form-control" rows="3" name="note" value="${supplier.note}">${supplier.note}</textarea>
+					</tr>
+				</table>
+			</div>
+			<div class="tab-pane" id="supplierContact">
+				<div style="width:560px; border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+					<div id="cloneDiv">
+						<#list supplier.contacts as contact>
+						<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 535px;">
+							<tr>
+								<td style="text-align: right;"><@m.m "supplier.fullName" />：</td>
+								<td class="controls">
+									<input type="hidden" name="contacts[${contact_index}].supplierContactId" value="${contact.supplierContactId}"/>
+									<input type="text" value="${contact.name}" class="form-control" name="contacts[${contact_index}].name" check-type="required" required-message="<@m.m 'global.notNull' />">
+								</td>
+								<td style="text-align: right;"><@m.m "supplier.tel" />：</td>
+								<td><input type="text" value="${contact.tel}" class="form-control" name="contacts[${contact_index}].tel"></td>
+								<td rowspan="2" style="vertical-align: top;cursor: pointer;" class="deleteSupplier" onclick="deleteContact('${contact.supplierContactId}')">X</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;"><@m.m "supplier.mobile" />：</td>
+								<td><input type="text" value="${contact.mobile}" class="form-control" name="contacts[${contact_index}].mobile"></td>
+								<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+								<td class="controls"><input type="text" value="${contact.extension}" class="form-control extension" name="contacts[${contact_index}].extension" ></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;"><@m.m "supplier.email" />：</td>
+								<td class="controls"><input type="text" value="${contact.email}" class="form-control" name="contacts[${contact_index}].email" check-type="required" mail-message="<@m.m 'global.notNull' />"></td>
+							</tr>
+						</table>
+						</#list>
+					</div>
+					<div style="width: 540px;;text-align: right;margin-bottom: 10px;">
+						<button type="button" class="btn btn-default" style="text-align: right;" onclick="addSupplier()"><@m.m "customer.addContact" /></button>
+					</div>
+				</div>
+			</div>
+			<input type="submit" value="<@m.m 'global.edit' />" class="btn btn-default" style="width:200px;margin: 20px 0;"/>
+		</div>
+	</form>
+	<div id="cloneTableDiv">
+	<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;display: none;width: 535px;">
+		<tr>
+			<td style="text-align: right;"><@m.m "supplier.fullName" />：</td>
+			<td class="controls"><input type="text" class="form-control name" name="contacts[0].name" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td style="text-align: right;"><@m.m "supplier.tel" />：</td>
+			<td class="controls"><input type="text" class="form-control tel" name="contacts[0].tel" check-type="required" tel-message="<@m.m 'global.notNull'/>"></td>
+			<td rowspan="2" style="vertical-align: top;cursor: pointer;" class="deleteSupplier">X</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "supplier.mobile" />：</td>
+			<td class="controls"><input type="text" class="form-control mobile" name="contacts[0].mobile" check-type="required" cellPhone-message="<@m.m 'global.notNull'/>"></td>
+			<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+			<td class="controls"><input type="text" class="form-control extension" name="contacts[0].extension" check-type="required"></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "supplier.email" />：</td>
+			<td class="controls"><input type="text" class="form-control email" name="contacts[0].email" check-type="required" mail-message="<@m.m 'global.notNull' />"></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

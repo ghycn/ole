@@ -1,0 +1,91 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/customer/customer.js"></script>
+<@g.close />
+<body>
+<form action="${ctx}/custom/save" method="post" id="customForm" myForm="j&p">
+	<div class="customAdd" style="border: 1px solid #999; padding:5px 20px 0px 20px; width: 600px;margin: 0 auto;">
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "customer.addCustomer" /></div>
+		<ul class="nav nav-tabs" id="customTab">
+			<li class="active"><a href="#info"><@m.m "customer.customerInfo" /></a></li>
+			<li><a href="#custom"><@m.m "customer.contactPerson" /></a></li>
+		</ul>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<div class="tab-pane active" id="info">
+				<table id="customerAddTable">
+					<tr>
+						<td style="text-align:right"><@m.m "customer.classification" />：</td>
+						<td style="text-align:left" id="typeTd">
+							<select class="form-control" name="type" id="type">
+								<#list customerTypes as customerType>
+									<option value="${customerType.name}">${customerType.name}</option>
+								</#list> 
+							</select>
+						</td>
+						<td>
+						     <img style="height: 20px; cursor: pointer;" onclick="inputCusType()" src="${ctx}/static/images/add.png">
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right">
+							<@m.m "customer.companyName" />：<br/>
+							<span style="color: red;font-size: 12px;"><@m.m "global.invoice" /></span>
+						</td>
+						<td class="controls" style="text-align:left"><input type="text" placeholder="<@m.m 'customer.companyName' />" class="form-control" id="name" name="name" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "customer.location" />：</td>
+						<td class="controls" style="text-align:left"><input type="text" placeholder="<@m.m 'customer.location'/>" class="form-control" id="customerAddress" name="customerAddress"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "customer.officialWebsite" />：</td>
+						<td class="controls" style="text-align:left"><input type="text" placeholder="http://www.baidu.com" class="form-control" id="officialWebsite" name="officialWebsite"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "customer.note" />：</td>
+						<td style="text-align:left"><textarea class="form-control" placeholder="<@m.m 'customer.note'/>" rows="3" id="note" name="note"></textarea></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="tab-pane" id="custom">
+				<div style="border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+					<div id="cloneDiv"></div>
+					<div style="width: 540px;;text-align: right;margin-bottom: 10px;">
+						<button type="button" class="btn btn-default" style="text-align: right;" onclick="addCustom()"><@m.m "customer.addContact" /></button>
+					</div>
+				</div>
+			</div>
+				<input type="submit" onclick="return save();" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;"/>
+		</div>
+	</div>
+</form>
+<div id="cloneTableDiv">
+	<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 535px;display: none;">
+		<tr>
+			<td style="text-align: right;"><@m.m "customer.fullName" />：</td>
+			<td class="controls"><input type="text" placeholder="<@m.m 'customer.fullName' />" class="form-control name" name="contacts[0].customContactName" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td style="text-align: right;"><@m.m "customer.tel" />：</td>
+			<td class="controls"><input type="text" placeholder="010-7232122" class="form-control tel" name="contacts[0].tel" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td rowspan="3" style="vertical-align: top;cursor: pointer;" class="deleteCustom">X</td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "customer.mobile" />：</td>
+			<td class="controls"><input type="text" placeholder="13522785612" class="form-control mobile" name="contacts[0].mobile" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+			<td class="controls"><input type="text" class="form-control extension" name="contacts[0].extension" ></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "customer.email" />：</td>
+			<td class="controls"><input type="text" placeholder="abc@@ole-ad.com" class="form-control email" name="contacts[0].email" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td style="text-align: right;"></td>
+			<td class="controls"></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

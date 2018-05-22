@@ -1,0 +1,153 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript"
+	src="${ctx}/static/script/quotation/quotation.js"></script>
+<body>
+	<@g.close />
+	<form action="" method="post" style="margin: 0px 20px;"
+		id="quotationItemForm">
+		<div
+			style="text-align: center; margin-top: 10px; font-size: 16px; font-weight: bolder;"><@m.m
+			"quotation.addPriceItem" /></div>
+		<div class="tab-content"
+			style="text-align: center; padding-bottom: 5px;">
+			<input type="hidden" name="quotationListId" id="quotationListId"/> <input type="hidden"
+				name="quotationId" value="${quotationId}" id="quotationId" />
+			<table id="quotationItemEditTable" style="margin-left: 40px;">
+			  <tbody>
+				<tr>
+					<td><@m.m "quotation.category" />：</td>
+					<td class="controls">
+					<select id="categorys" class="form-control" onchange="selectChange();" style="width: 400px;clip: rect(auto auto auto 320px); position: absolute">
+								<option value="" ><@m.m 'global.pleaseChoose'/></option>
+								<#list parentList as category> <#if category.parent!=0>
+									<option value="${category.quotationListId}-${category.supplierCode}" >${category.category}</option>
+								 </#if></#list>
+								</select>
+					<input style="width: 400px;" onBlur="change();" type="text"
+						id="category" placeholder="<@m.m "quotation.selectOrWrite"  />"
+						class="form-control" name="category" check-type="required"
+						required-messae="<@m.m 'global.notNull'/>">
+						
+					</td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.projectName" />：</td>
+					<td class="controls">
+						<input style="width: 400px;" type="text" id="item" class="form-control" placeholder="<@m.m "quotation.projectName" />" name="item" check-type="required" required-message="<@m.m 'global.notNull'/>">
+					</td>
+				</tr>
+<!-- 				<tr> -->
+<!-- 					<td><@m.m "susupplier.classification" />：</td> -->
+<!-- 					<td> -->
+<!-- 						<select class="form-control" id="supplierType" onchange="createSupplierSelect(this.value);">  -->
+<!-- 								<option value="" ><@m.m 'global.pleaseChoose'/></option> -->
+<!-- 							    <#list supplierTypeList as supplierType> -->
+<!-- 									<option value="${supplierType.name}">${supplierType.name}</option> -->
+<!-- 								</#list> -->
+<!-- 						</select> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td><@m.m "projectFee.quotationName" />：</td> -->
+<!-- 					<td> -->
+<!-- 					<input type="hidden" id="supplierCodeId"/> -->
+<!-- 					<select class="form-control" name="supplier.supplierCode" id="supplierCode"> -->
+<!-- 							 <option value="" ><@m.m 'global.pleaseChoose'/></option> -->
+<!-- 							 <#list supplierList as supplier> -->
+<!-- 								<option value="${supplier.supplierCode}">${supplier.name}</option> -->
+<!-- 							</#list> -->
+<!-- 					</select></td> -->
+<!-- 				</tr> -->
+				<tr>
+					<td><@m.m "quotation.amount" />：</td>
+					<td class="controls"><input style="width: 400px;" type="text"
+						class="form-control" placeholder="<@m.m 'global.numberError'/>"
+						oninput="total()" id="quantity" name="quantity"
+						check-type="number" number-message="<@m.m 'global.numberError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.unitPrice" />：</td>
+					<td class="controls"><input style="width: 400px;" type="text"
+						class="form-control" placeholder="<@m.m 'global.numberError'/>"
+						oninput="total()" id="unitPrice" name="unitPrice"
+						check-type="number" number-message="<@m.m 'global.numberError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.total" />：</td>
+					<td class="controls"><input style="width: 400px;" type="text"
+						class="form-control" placeholder="0.0" id="subTotal"
+						readonly="readonly" name="subTotal"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.specification" />：</td>
+					<td class="controls"><input style="width: 400px;" type="text"
+						id="spec" class="form-control" placeholder="<@m.m "quotation.specification" />"
+						name="spec" check-type="length" length-message="<@m.m
+						'global.lengthError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "global.note" />：</td>
+					<td><input type="text" style="width: 400px;" id="note"
+						class="form-control" placeholder="<@m.m "global.note" />"
+						name="note"></td>
+				</tr>
+				</tbody>
+			</table>
+			<input type="button" value="<@m.m 'global.save' />"
+				onclick="saveItem();" class="btn btn-default"
+				style="width: 200px; margin: 20px 0;" />
+		</div>
+	</form>
+	</div>
+</body>
+<script type="text/javascript">
+ function selectChange(){
+	 var options=$("#categorys option:selected");  //获取选中的项
+	 //alert(options.val());   //拿到选中项的值
+	var arr = options.val().split("-");
+ 	document.getElementById("quotationListId").value=arr[0];
+ 	document.getElementById("category").value=options.text();
+ 	
+ 	var options1=$("#supplierCode option");  //获取选中的项
+ 	for(var i=0;i<options1.length;i++){
+ 		if(arr[1]==options1[i].value){
+ 			options1[i].selected = true;
+ 			//$("#supplierCode").attr('disabled',true);
+ 			//$("#supplierCodeId").attr('name',"supplier.supplierCode");
+ 			//$("#supplierCodeId").attr('value',options1[i].value);
+ 		}
+ 	}
+ }
+ function change(){
+	 var options=$("#categorys option:selected");  //获取选中的项
+	 if(document.getElementById("category").value!=options.text()){
+		 document.getElementById("quotationListId").value="";
+		// $("#supplierCode").removeAttr('disabled');
+		// $("#supplierCodeId").removeAttr('name');
+	 }
+ }
+ function createSupplierSelect(type){
+ 		var type =  encodeURI(encodeURI(type));
+		var url = ctx+"/quotationItem/querySuppliers?type="+type;
+		 $.ajax({   
+		        async : false,   
+		        cache:false, 
+		        type: 'POST',
+		        url: url, //请求的action路径    
+		        error: function () {//请求失败处理函数   
+		        },   
+		        success:function(data){ //请求成功后处理函数。    
+		        	var list = eval(data);
+		        	var obj=document.getElementById('supplierCode');
+		        	obj.options.length = 0;
+		        	obj.options.add(new Option(i18n('global.pleaseChoose'),"")); //这个兼容IE与firefox
+		        	for(var i = 0;i<list.length;i++){
+		        		obj.options.add(new Option(list[i]["name"],list[i]["supplierCode"])); //这个兼容IE与firefox
+		        	}
+		        }
+		 });
+ }
+ </script>
+</html>

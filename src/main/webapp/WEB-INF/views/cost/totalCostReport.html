@@ -1,0 +1,27 @@
+<@g.docType />
+<html>
+<@g.head title="menu.employeesLeaveReports">
+<script type="text/javascript" src="${ctx}/static/script/cost/totalCostReport.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs names="menu.employeesLeaveReports,menu.overtimeReports,menu.annualReportsTheNumberOfOpenCases,menu.theTotalCostToOpenTheCaseReport,menu.openDailyAverageCaseCostReport,menu.grossProfitOpenCaseReports"
+							 urls="/wkLeave/report,/wkOvertime/report,/project/report,/costAnalysis/totalCost/report,/costAnalysis/dailyaverage/report,/costAnalysis/grossProfit/report"
+							 active="menu.theTotalCostToOpenTheCaseReport"/>
+				<div class="tableSearch" style="width: 100%;">
+					<#if !isBoss>
+						<input type="hidden" value="${loginUser.userCode}" id="userCode"/>
+					</#if>
+				</div>
+			</div>
+			<div myForm="j&p"><div id="totalCostReport" style="height: 400px;"></div></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<link href="${ctx}/static/css/cost/coseAnalysis.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="${ctx}/static/css/TreeTable.css" />
+<script type="text/javascript">var taxRate = "${taxRate}";</script>
+<script type="text/javascript"
+	src="${ctx}/static/script/quotation/quotationItem.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/TreeTable.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/script/quotation/TreeTableQuotationList.js"></script>
+<style>
+.head1{
+	display:none;
+}
+</style>
+<@g.close/>
+<h2 style="text-align: center;"><@m.m "quotation.viewQuotation"/></h2>
+<div id="coseAnalysisDiv"
+	style="margin-top: 10px; padding: 30px 20px 245px 20px;">
+	<input type="hidden" value="${quotationId}" id="quotationId" />
+	<input type="hidden" value="${status}" id="status1" />
+	<div style="border: 1px solid #797979; padding: 3px;">
+		<table>
+			<tr>
+				<th><@m.m "customer.contactPerson"/>:</th>
+				<td><#if contact??>${contact.customContactName}</#if></td>
+				<th><@m.m "customer.mobile"/>：</th>
+				<td><#if contact??>${contact.mobile}</#if></td>
+			</tr>
+			<tr>
+				<th><@m.m "coseAnalysis.mobile"/>：</th>
+				<td><#if contact??>${contact.tel}</#if></td>
+				<th><@m.m "customer.email"/>：</th>
+				<td><#if contact??>${contact.email}</#if></td>
+			</tr>
+		</table>
+	</div>
+	<input type="button" value="<@m.m 'global.exportExcel'/>"
+		class="btn btn-default btn-sm" style="float: right; margin: 10px 0;"
+		onclick="window.location.href='${ctx}/quotation/export?quotationId=${quotationId}'" />
+	<#if status!=3> 
+			<#if roleId==6>
+					<#if userCode==loginUser.userCode>
+						<input type="button" value="<@m.m 'global.add'/>"
+							class="btn btn-default btn-sm" style="float: right; margin: 10px 0;"
+							data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+							href="${ctx}/quotationItem/add?quotationId=${quotationId}" /> 
+							
+					</#if>
+			</#if>
+			<#if roleId!=6>
+				<input type="button" value="<@m.m 'global.add'/>"
+					class="btn btn-default btn-sm" style="float: right; margin: 10px 0;"
+					data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+					href="${ctx}/quotationItem/add?quotationId=${quotationId}" /> 
+			</#if>
+		</#if>
+	<div id='quotationItem_table' style="margin-top: 23px;" class="quotationItem">
+	</div>
+	<table style="margin-top: 50px; width: 45%; float: right;">
+		<tr>
+			<th><@m.m "quotation.notTaxMoney"/></th>
+			<td id="notTaxMoney"></td>
+		</tr>
+		<tr>
+			<th><@m.m "quotation.tax"/><#if taxRate??>(${taxRate}%)</#if></th>
+			<td id="tax"></td>
+		</tr>
+		<tr>
+			<th><@m.m "quotation.taxTotal"/></th>
+			<td id="taxMoney"></td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 日志 -->
+	<class name="com.etiansoft.ole.po.SysLog" table="SYS_LOG">
+		<id name="logId" type="java.lang.Integer">
+			<column name="LOG_ID" />
+			<generator class="native" />
+		</id>
+		<property name="operator" type="java.lang.String">
+			<column name="OPERATOR">
+				<comment>操作人</comment>
+			</column>
+		</property>
+		<property name="operateTime" type="java.util.Date">
+			<column name="OPERATE_TIME">
+				<comment>操作时间</comment>
+			</column>
+		</property>
+		<property name="opertateIp" type="java.lang.String">
+			<column name="OPERTATE_IP">
+				<comment>操作IP</comment>
+			</column>
+		</property>
+		<property name="content" type="java.lang.String">
+			<column name="CONTENT">
+				<comment>操作内容</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

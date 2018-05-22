@@ -1,0 +1,97 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<!-- <script type="text/javascript" src="${ctx}/static/script/global.js"></script> -->
+<script type="text/javascript"
+	src="${ctx}/static/script/quotation/quotation.js"></script>
+<@g.close />
+<body>
+	<input type="hidden" value="${projectName}" id="projectName" />
+	<form action="" method="post" id="quotationForm" myForm="j&p">
+		<div
+			style="text-align: center; margin-top: 10px; font-size: 16px; font-weight: bolder;"><@m.m
+			"quotation.addPrice" /></div>
+		<div class="tab-content"
+			style="text-align: center; padding-bottom: 5px;">
+			<input type="hidden" value="${loginUser.name}" id="applicant" />
+			<table id="quotationAddTable" style="text-align: center;">
+				<tr>
+<!-- 					<td style="text-align: right;"><@m.m "quotation.customer" />：</td> -->
+					<td><input class="form-control" type="hidden"
+						value="${projectCode}" name="prProject.projectCode"
+						readonly="readonly" /> 
+						<input type="hidden" name="customer.customerCode" value="${customerCode}">
+						<input type="hidden" id="customerName"  value="${customerName}">
+<!-- 						<select class="form-control" -->
+<!-- 						name="customer.customerCode" id="customerCode" -->
+<!-- 						style="width: 470px;">  -->
+<!-- 							<#list customers as customer> -->
+<!-- 								<option  value="${customer.customerCode}"  >${customer.name}</option> -->
+<!-- 							</#list> -->
+<!-- 					</select> -->
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "activity.name" />：</td>
+					<td>
+						<select class="form-control" name="activity.activityCode" id="activityCode" style="width: 470px;"> 
+							<#list activitys as activity>
+							<option value="${activity.activityCode}">${activity.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.contactPerson"/>:</td>
+					<td>
+						<select class="form-control" name="contact" id="customerContactId" style="width: 470px;"> 
+							<#list customerContact as contact>
+							<option value="${contact.customerContactId}">${contact.customContactName}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.caseTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5"
+							data-date-format="yyyy-mm-dd" style="width: 470px;">
+							<input class="form-control calculate" size="16" type="text"
+								id="caseTime" style="cursor: pointer;" name="casetime"
+								value="${currentDate}" readonly> <span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "global.note" />：</td>
+					<td><textarea class="form-control" id="note"
+							placeholder="<@m.m "global.note" />" rows="3" name="note"
+						style="width: 470px;"></textarea></td>
+				</tr>
+			</table>
+			<input type="button" onclick="save();" value="<@m.m 'global.save' />"
+				class="btn btn-default" style="width: 200px; margin: 20px 0;" />
+		</div>
+	</form>
+</body>
+
+<script type="text/javascript">
+	$(function (){
+		$('.clear_date').datetimepicker({
+// 		startDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+	})
+
+</script>
+</html>

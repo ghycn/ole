@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 成本分析子项表 -->
+	<class name="com.etiansoft.ole.po.CostListItem" table="COST_LIST_ITEM">
+		<id name="itemCode" type="java.lang.String">
+			<column name="ITEM_CODE" />
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME">
+				<comment>报价项目名</comment>
+			</column>
+		</property>
+		<property name="quotation" type="java.lang.Double">
+			<column name="QUOTATION">
+				<comment>报价</comment>
+			</column>
+		</property>
+		<property name="producFactory" type="java.lang.String">
+			<column name="PRODUC_FACTORY">
+				<comment>制作厂家</comment>
+			</column>
+		</property>
+		<property name="person" type="java.lang.String">
+			<column name="PERSON">
+				<comment>对接人</comment>
+			</column>
+		</property>
+		<property name="taxQuotation" type="java.lang.Double">
+			<column name="TAX_QUOTATION">
+				<comment>含税报价</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

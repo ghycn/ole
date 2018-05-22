@@ -1,0 +1,59 @@
+<style>
+td {
+	padding: 5px;
+	text-align: left;
+}
+</style>
+<@g.close />
+<div class="tab-content" myForm="j&p"
+	style="text-align: center; padding-bottom: 5px;">
+	<div style="text-align: center; font-size: 16px; font-weight: bolder;"><@m.m
+		"global.info" /></div>
+			<table id="projectAddTable" style="text-align: center">
+				<tr>
+					<td style="text-align: right;"><@m.m "device.name" />：</td>
+					<td>
+					<input type="text"  class="form-control" value="${device.device.name}"  style="width: 450px;" readonly />
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrower" />：</td>
+					<td class="controls">
+					<input type="text"  class="form-control" value="${device.applicant.name}"  style="width: 450px;" readonly />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrowTime" />：</td>
+					<td class="controls">
+					<input type="text"  class="form-control" value="${device.borrowTime}"  style="width: 450px;" readonly />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.returnTime" />：</td>
+					<td class="controls">
+					<input type="text"  class="form-control" value="${device.returnTime}"  style="width: 450px;" readonly />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.stockNum" />：</td>
+					<td>
+					<input type="text"  class="form-control" value="${device.device.stockNum}"  style="width: 450px;" readonly />
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.lendNum" />：</td>
+					<td>
+					<input type="text"  class="form-control" value="${device.lendNum}"  style="width: 450px;" readonly />
+					</td>				
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.status" />：</td>
+					<td>
+					<input type="text"  class="form-control" value="<#if device.status==false><@m.m 'device.borrow.return' /></#if><#if device.status==true><@m.m 'device.borrow.noReturn' /></#if>" style="width: 450px;" readonly />
+					</td>				
+				</tr>
+				
+			</table>
+	<input type="button" value="<@m.m 'global.sure' />"
+		class="btn btn-default" data-dismiss="modal"
+		style="width: 150px; margin: 20px 0;" />
+</div>

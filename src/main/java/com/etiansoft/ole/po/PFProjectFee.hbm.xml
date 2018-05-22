@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 项目款 -->
+	<class name="com.etiansoft.ole.po.PFProjectFee" table="PF_PROJECT_FEE">
+		<id name="projectFeeId" type="java.lang.Integer">
+			<column name="PROJECT_FEE_ID" />
+			<generator class="native" />
+		</id>
+		<many-to-one name="quotation" column="QUOTATION_ID" />
+		<many-to-one name="prProject" column="PROJECT_CODE" />
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<many-to-one name="applicant" column="APPLICANT" />
+		<property name="amount" type="java.lang.Double">
+			<column name="AMOUNT">
+				<comment>含税金额</comment>
+			</column>
+		</property>
+		<property name="applyDate" type="java.util.Date">
+			<column name="APPLY_DATE" not-null="true">
+				<comment>申请日期</comment>
+			</column>
+		</property>
+		<property name="payStatus" type="java.lang.Integer">
+			<column name="PAY_STATUS" not-null="true">
+				<comment>付款状态</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS" not-null="true">
+				<comment>状态(0已申请,1已批准,2已关账)</comment>
+			</column>
+		</property>
+		<property name="notes" type="java.lang.String">
+			<column name="NOTES">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<many-to-one name="createStaff" column="CREATE_STAFF" />
+		<property name="createTime" type="java.sql.Timestamp">
+			<column name="CREATE_TIME" not-null="true">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="typeId" type="java.lang.Integer">
+			<column name="TYPE_ID">
+				<comment>其它类型编号 </comment>
+			</column>
+		</property>
+		<property name="typeName" type="java.lang.String">
+			<column name="TYPE_NAME">
+				<comment>其它类型名称 </comment>
+			</column>
+		</property>
+		<many-to-one name="supplier" column="SUPPLIER_CODE" />
+		<set name="quotationLists" table="QUOTATION_LIST_PROJECTFEES">
+			<key>
+				<column name="PROJECT_FEE_ID" />
+			</key>
+			<many-to-many column="QUOTATION_LIST_ID"
+				class="com.etiansoft.ole.po.QuotationList" />
+		</set>
+	</class>
+</hibernate-mapping>

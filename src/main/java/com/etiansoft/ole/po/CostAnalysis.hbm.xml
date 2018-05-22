@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 活动表 -->
+	<class name="com.etiansoft.ole.po.CostAnalysis" table="COST_ANALYSIS">
+		<id name="costAnalysisId" column="COST_ANALYSIS_ID">
+			<generator class="native" />
+		</id>
+		<many-to-one name="project" column="PROJECT_CODE" unique="true"/>
+		<many-to-one name="quotation" column="QUOTATION_ID" unique="true"/>
+		<property name="contractNo" column="CONTRACT_NO" />
+		<property name="totalAmount" column="TOTAL_AMOUNT" />
+		<property name="totalCost" column="TOTAL_COST" />
+		<property name="grossProfit" column="GROSS_PROFIT" />
+		<property name="profitRate" column="PROFIT_RATE" />
+		<property name="noTaxQuotation" column="NO_TAX_QUOTATION" />
+		<property name="taxQuotation" column="TAX_QUOTATION" />
+		<property name="outCost" column="OUT_COST" />
+		<property name="inCost" column="IN_COST" />
+		<property name="invoiceTax" column="INVOICE_TAX" />
+		<property name="enterpriseTax" column="ENTERPRISE_TAX" />
+		<property name="desingDays" column="DESIGN_DAYS" />
+		<property name="desingAmount" column="DESIGN_AMOUNT" />
+		<property name="activeSupportDays" column="ACTIVE_SUPPORT_DAYS" />
+		<property name="activeSupportAmount" column="ACTIVE_SUPPORT_AMOUNT" />
+		<property name="otherAmount" column="OTHER_AMOUNT" />
+		<property name="relationAmount" column="RELATION_AMOUNT" />
+		<property name="status" column="STATUS" />
+		<property name="notes" column="NOTES" />
+	</class>
+</hibernate-mapping>

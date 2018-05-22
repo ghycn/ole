@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 设备 -->
+	<class name="com.etiansoft.ole.po.DeviceBorrow" table="BORROW">
+		<id name="borrowCode" type="java.lang.Integer">
+			<column name="BORROW_CODE" />
+			<generator class="native" />
+		</id>
+		<property name="lendNum" type="java.lang.Integer">
+			<column name="LENDNUM" not-null="true">
+				<comment>借出数量</comment>
+			</column>
+		</property>
+		<property name="applyTime" type="date">
+			<column name="APPLY_TIME">
+				<comment>申请时间</comment>
+			</column>
+		</property>
+		<property name="borrowTime" type="date">
+			<column name="BORROW_TIME" not-null="true">
+				<comment>借出时间</comment>
+			</column>
+		</property>
+		<property name="returnTime" type="date">
+			<column name="RETURN_TIME">
+				<comment>归还时间</comment>
+			</column>
+		</property>
+		<property name="status" type="boolean">
+			<column name="STATUS" not-null="true">
+				<comment>状态(0归还, 1未归还)</comment>
+			</column>
+		</property>
+		<property name="notes" type="java.lang.String">
+			<column name="note" not-null="true">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<many-to-one name="applicant" column="APPLICANT" class="com.etiansoft.ole.po.SysUser"/>
+		<many-to-one name="device" column="DEVICE_ID" class="com.etiansoft.ole.po.Device"/>
+	</class>
+</hibernate-mapping>

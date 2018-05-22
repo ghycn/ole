@@ -1,0 +1,61 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/bootstrap-multiselect.css?v=1.0"
+	rel="stylesheet">
+<link href="${ctx}/static/bower_components/tree/skin/ui.dynatree.css?v=1.0"
+	rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/script/bootstrap-multiselect.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/script/projectFee/apply.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/bower_components/tree/jquery.dynatree.min.js"></script>
+<link href="${ctx}/static/css/apply.css?v=1.0"
+	rel="stylesheet">	
+	
+<body>
+	<form action="${ctx}/projectFee/otherApply/addOrUpdate" method="post"
+		id="ProjectFeeCh">
+		<@g.close />
+		<div
+			style="text-align: center; font-size: 16px; font-weight: bolder; margin: 10px auto;"><@m.m
+			"menu.applyForFunds" /></div>
+			<input type="hidden" value="${quotationId}" name="quotationId" />
+			<input type="hidden" value="${projectFeeId}" name="projectFeeId" />
+        <div class="title"></div>
+        <div class="c_name">
+            <div class="left"><@m.m "projectFee.quotationName"/>：</div>
+            <div class="right">
+            	<select class="form-control" name="typeId">
+            			<#list types as type>
+						<option value="${type.id}" >${type.name}</option>
+						</#list>
+				</select></div>
+        </div>
+          <div class="c_name">
+            <div class="left"><@m.m "projectFee.remainingAmount" />：</div>
+            <div class="right"><input type="text" placeholder="0.0" readonly
+					class="form-control" name=""
+					value="<#if pAmount??>${pAmount}<#else>0.00</#if>"
+					 pattern="^\d+(\.\d+)?$" required-message="<@m.m 'global.numberError'/>"></div>
+        </div>
+         <div class="c_name">
+            <div class="left"><@m.m "projectFee.money" />：</div>
+            <div class="right"><input type="text" placeholder="0.0"
+					class="form-control" name="amount"
+					value="${amount}"
+					 pattern="^\d+(\.\d+)?$" required-message="<@m.m 'global.numberError'/>"></div>
+        </div>
+		<div style="margin: 20px 0; text-align: center; width: 100%;">
+		 <input
+				type="submit" value="<@m.m 'global.save' />" class="btn btn-default" />
+			 <input type="button" value="<@m.m 'global.cancel' />"
+				class="btn btn-default" data-dismiss="modal" />
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

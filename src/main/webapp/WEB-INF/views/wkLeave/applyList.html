@@ -1,0 +1,39 @@
+<@g.docType />
+<html>
+<@g.head title="wkLeave.ApplicationForLeave">
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/applyList.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs names="wkLeave.ApplicationForLeave,wkOvertime.application,menu.applyForFunds"
+							 urls="/wkLeave/applyList,/wkOvertime/applyList,/projectFee/applyList"
+							 active="wkLeave.ApplicationForLeave"/>
+				<div class="tableSearch" style="width: 100%;">
+					<#if !isBoss>
+						<input type="hidden" value="${loginUser.userCode}" id="userCode"/>
+					</#if>
+					<label style="float: left;height: 30px;line-height: 30px;margin-right: 8px;"><@m.m "global.status" />:</label>
+					<select name="selectDropDown" id="selectDropDown" class="form-control" style="height: 30px; width: 150px;float: left;margin-right: 10px;">
+						<option selected="true"><@m.m "holiday.whole"/></option>
+						<option value="1"><@m.m "holiday.approve"/></option>
+						<option value="2"><@m.m "holiday.rejectedChange"/></option>
+						<option value="3"><@m.m "holiday.cancellation"/></option>
+					</select>
+					<button class="btn btn-default btn-sm" onclick="search('wkLeaveApply-dataTable')"><@m.m "global.query" /></button>
+					<input type="button" value="<@m.m 'wkLeave.addapplyLeave' />" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/wkLeave/apply/add"/>
+				</div>
+			</div>
+			<@g.modal id="modalDiv"/>
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover" id="wkLeaveApply-dataTable" myRp="g"></table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

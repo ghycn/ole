@@ -1,0 +1,39 @@
+<@g.docType />
+<html>
+<@g.head title="menu.employeesLeaveReports">
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/report.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs names="menu.employeesLeaveReports,menu.overtimeReports,menu.annualReportsTheNumberOfOpenCases,menu.theTotalCostToOpenTheCaseReport,menu.openDailyAverageCaseCostReport,menu.grossProfitOpenCaseReports"
+							 urls="/wkLeave/report,/wkOvertime/report,/project/report,/costAnalysis/totalCost/report,/costAnalysis/dailyaverage/report,/costAnalysis/grossProfit/report"
+							 active="menu.employeesLeaveReports"/>
+				<div class="tableSearch" style="width: 100%;">
+					<#if isBoss>
+						<form action="${ctx}/wkLeave/report" method="post">
+							<input type="hidden" value="${userCode}" id="userCode"/>
+							<label style="float: left;height: 30px;line-height: 30px;margin-right: 10px;"><@m.m "sys.userName" />:</label>
+							<select class="form-control" name="userCode" style="height: 30px; width: 150px;float: left;margin-right: 10px;">
+								<option value=""><@m.m "wkLeave.whole" /></option>
+								<#list users as user>
+									<option value="${user.userCode}" <#if user.userCode==userCode>selected="selected"</#if>>${user.name}</option>
+								</#list>
+							</select>
+							<button class="btn btn-default btn-sm" type="submit"><@m.m "global.query" /></button>
+						</form>
+						<#else>
+						<input type="hidden" value="${loginUser.userCode}" id="userCode"/>
+					</#if>
+				</div>
+			</div>
+			<div myForm="j&p"><div id="wkLeaveReport" style="height: 400px;"></div></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

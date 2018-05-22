@@ -1,0 +1,13 @@
+table,.customAdd{
+	margin:100px auto;
+	width:400px;
+}
+td{
+	padding: 5px;
+}
+.submitButton{
+	text-align: right;
+}
+input{
+	width:200px;
+}

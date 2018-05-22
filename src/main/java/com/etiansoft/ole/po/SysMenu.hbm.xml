@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 菜单 -->
+	<class name="com.etiansoft.ole.po.SysMenu" table="SYS_MENU">
+		<id name="menuId" type="java.lang.Integer">
+			<column name="MENU_ID" />
+			<generator class="native" />
+		</id>
+		<property name="menuName" type="java.lang.String">
+			<column name="MENU_NAME" not-null="true">
+				<comment>菜单名称</comment>
+			</column>
+		</property>
+		<property name="url" type="java.lang.String">
+			<column name="URL" not-null="true">
+				<comment>地址</comment>
+			</column>
+		</property>
+		<property name="parentId" type="java.lang.Integer">
+			<column name="PARENT_ID" not-null="true">
+				<comment>父级ID</comment>
+			</column>
+		</property>
+		<property name="icon" type="java.lang.String">
+			<column name="ICON" not-null="false">
+				<comment>图标</comment>
+			</column>
+		</property>
+		<property name="sort" type="java.lang.Integer">
+			<column name="SORT">
+				<comment>排序</comment>
+			</column>
+		</property>
+		<list name="menuItems" table="SYS_MENU_ITEM" cascade="all" fetch="join">
+			<key column="MENU_ID" />
+			<index column="SORT" type="java.lang.Integer" />
+			<one-to-many class="com.etiansoft.ole.po.SysMenuItem" />
+		</list>
+	</class>
+</hibernate-mapping>

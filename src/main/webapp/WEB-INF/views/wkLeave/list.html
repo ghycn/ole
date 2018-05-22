@@ -1,0 +1,38 @@
+<@g.docType />
+<html>
+<@g.head title="menu.leaveGlance" />
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/wkLeave.js"></script>
+</head>
+<body>
+	<@g.top />
+	<@g.nav />
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="tabs-search">
+					<@g.nav_tabs names="menu.leaveGlance" urls="/wkLeave/list" active="menu.leaveGlance"/>
+					<div class="tableSearch">
+						<label><@m.m "wkLeave.applicant" />: <input class="form-control input-sm" id="TTname" name ="TTname"style="width: 200px; display: inline;"></label>
+						
+						<label style="float: left;height: 30px;line-height: 30px;margin-right: 8px;"><@m.m "wkLeave.status" />:</label>
+						<select name="selectDropDown" id="selectDropDown" class="form-control" style="height: 30px; width: 150px;float: left;margin-right: 10px;">
+							<option selected="true"><@m.m "holiday.whole"/></option>
+							<option value="0"><@m.m "global.audit"/></option>
+							<option value="1"><@m.m "holiday.approve"/></option>
+							<option value="2"><@m.m "holiday.rejectedChange"/></option>
+							<option value="3"><@m.m "holiday.cancellation"/></option>
+						</select>
+						<button class="btn btn-default btn-sm" type="button" onclick="search('wkLeave-dataTable');"><@m.m "global.query" /></button>
+					</div>
+				</div>
+				<@g.modal id="info"/>
+				<div class="panel-body">
+					<div class="dataTable_wrapper">
+						<table class="table table-striped table-bordered table-hover" id="wkLeave-dataTable" style="text-align: center;" myRp="g"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

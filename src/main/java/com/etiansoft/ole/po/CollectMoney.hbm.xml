@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 项目 -->
+	<class name="com.etiansoft.ole.po.CollectMoney" table="COLLECT_MONEY">
+		<id name="collectId" type="java.lang.Integer">
+			<column name="COLLECT_ID" />
+			<generator class="native" />
+		</id>
+		<many-to-one name="quotaion" column="QUOTATION_ID"/>
+		<many-to-one name="project" column="PROJECT_CODE"/>
+		<many-to-one name="applicant" column="APPLICANT"/>
+		<property name="date" type="java.util.Date">
+			<column name="DATE" not-null="true">
+				<comment>收款日期</comment>
+			</column>
+		</property>
+		<property name="invoice" type="boolean">
+			<column name="INVOICE" not-null="true">
+				<comment>是否开具发票</comment>
+			</column>
+		</property>
+		<property name="amount" type="double">
+			<column name="AMOUNT" not-null="true">
+				<comment>收款金额</comment>
+			</column>
+		</property>
+		<property name="toAccount" type="boolean">
+			<column name="TO_ACCOUNT" not-null="true">
+				<comment>是否到账</comment>
+			</column>
+		</property>
+		<property name="notes" type="java.lang.String">
+			<column name="NOTES">
+				<comment>备注</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

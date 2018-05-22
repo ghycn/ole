@@ -1,0 +1,20 @@
+<@g.docType />
+<@g.close />
+<form action="${ctx}/role/update" method="post" id="roleForm" myForm="j&p">
+	<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "role.setRole" /></div>
+	<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<table id="roleEditTable" width="90%"style="height: 90px;">
+			<input type="hidden" value="${role.roleId}" name="roleId"/>
+			<tr>
+				<td style="text-align: right;"><@m.m "role.name" />：</td>
+				<td  class="controls"><input type="text" class="form-control" name="name" value="${role.name}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			</tr>
+			<tr style="line-height: 20px;">
+				<td style="text-align: right;"><@m.m "global.note" />：</td>
+				<td  class="controls"><input type="text" class="form-control" name="notes" value="${role.notes}"></td>
+			</tr>
+		</table>
+		<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+		<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+	</div>
+</form>

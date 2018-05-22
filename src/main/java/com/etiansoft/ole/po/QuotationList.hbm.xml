@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 报价项 -->
+	<class name="com.etiansoft.ole.po.QuotationList" table="QUOTATION_LIST">
+		<id name="quotationListId" type="java.lang.Integer">
+			<column name="QUOTATION_LIST_ID" />
+			<generator class="native" />
+		</id>
+		<property name="category" type="java.lang.String">
+			<column name="CATEGORY">
+				<comment>類別</comment>
+			</column>
+		</property>
+		<property name="item" type="java.lang.String">
+			<column name="ITEM">
+				<comment>报价项</comment>
+			</column>
+		</property>
+		<property name="size" type="java.lang.String">
+			<column name="SIZE">
+				<comment>尺寸</comment>
+			</column>
+		</property>
+		<property name="quantity" type="java.lang.Integer">
+			<column name="QUANTITY">
+				<comment>数量</comment>
+			</column>
+		</property>
+		<property name="unitPrice" type="java.lang.Double">
+			<column name="UNIT_PRICE">
+				<comment>单价</comment>
+			</column>
+		</property>
+		<property name="subTotal" type="java.lang.Double">
+			<column name="SUB_TOTAL">
+				<comment>小计</comment>
+			</column>
+		</property>
+		<property name="spec" type="java.lang.String">
+			<column name="SPEC">
+				<comment>规格</comment>
+			</column>
+		</property>
+		<property name="note" type="java.lang.String">
+			<column name="NOTE">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="parent" type="java.lang.Integer">
+			<column name="PARENT">
+				<comment>父级</comment>
+			</column>
+		</property>
+ 		<property name="quotationId" type="java.lang.Integer">
+			<column name="QUOTATION_ID">
+				<comment>报价ID</comment>
+			</column>
+		</property>
+		<many-to-one name="supplier" column="SUPPLIER_ID" />
+		<set name="projectFees" table="QUOTATION_LIST_PROJECTFEES">
+			<key>
+				<column name="QUOTATION_LIST_ID" />
+			</key>
+			<many-to-many column="PROJECT_FEE_ID" class="com.etiansoft.ole.po.PFProjectFee" />
+		</set>
+	</class>
+</hibernate-mapping>

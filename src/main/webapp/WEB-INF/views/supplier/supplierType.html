@@ -1,0 +1,47 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/supplier/supplier.js"></script>
+<body>
+<@g.close />
+
+<form action="${ctx}/supplier/supplierTypeSave" method="post" id="supplierTypeForm" myForm="j&p">
+	<div class="supplierAdd" style="border: 1px solid #999; padding:5px 20px 0px 20px; width: 580px;margin: 0 auto;">
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "susupplier.classification" /></div>
+		<div style="text-align: center;padding-bottom: 5px;">
+			<div class="tab-pane" id="supplier" style="width:530px;text-align: center;">
+				<div style="border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+					<div id="cloneTypeDiv">
+						<#list types as type> 
+							<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width:500px;">
+								<tr>
+									<td style="text-align: center"><@m.m "global.typeName" />：</td>
+									<td class="controls"><input type="text" class="form-control name" readonly="readonly" check-type="required" value="${type.name}" required-message="<@m.m 'global.notNull' />"></td>
+									<td rowspan="1" style="vertical-align: top;cursor: pointer;" class="deleteType"><p onclick="javascript:deleteType('${type.typeId}', this);">X</p></td>
+								</tr>
+							</table>
+						</#list>
+					</div>
+					<div style="width: 510px;;text-align: right;margin-bottom: 10px;"> 
+						<button type="button" class="btn btn-default" style="text-align: right;" onclick="addType()"><@m.m "customer.addTypeName" /></button>
+					</div>
+					
+				</div>
+			</div>
+			<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;"/>
+        </div>
+		</div>
+	</div>
+</form>
+		
+<div id="typeTableDiv">
+	<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 500px;display: none;">
+		<tr>
+			<td style="text-align:center;"><@m.m "global.typeName" />：</td>
+			<td class="controls"><input type="text" class="form-control name" name="type" placeholder="<@m.m "customer.addTypeName" />" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td rowspan="1" style="vertical-align: top;cursor: pointer;" class="deleteType">X</td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

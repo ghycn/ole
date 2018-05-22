@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- 创建sessionFactory模板 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${database.dialect}</prop>
+				<prop key="hibernate.show_sql">${database.show_sql}</prop>
+				<prop key="hibernate.format_sql">${database.format_sql}</prop>
+				<!-- 指定Hibernate在何时释放JDBC连接. 默认情况下,直到Session被显式关闭或被断开连接时,才会释放JDBC连接. -->
+				<prop key="hibernate.connection.release_mode">${database.connection.release_mode}</prop>
+				<!-- Hibernate连接数据库超时设置 -->
+				<prop key="connection.autoReconnect">true</prop>
+				<prop key="connection.autoReconnectForPools">true</prop>
+				<prop key="connection.is-connection-validation-required">true</prop>
+				<prop key="hibernate.jdbc.batch_size">${database.jdbc.batch_size}</prop>
+				<prop key="hibernate.jdbc.fetch_size">${database.jdbc.fetch_size}</prop>
+				<!--connection.useUnicode连接数据库时是否使用Unicode编码 -->
+				<prop key="Connection.useUnicode">${database.connection.useUnicode}</prop>
+				<!--connection.characterEncoding连接数据库时数据的传输字符集编码方式，最好设置为UTF-8 -->
+				<prop key="connection.characterEncoding">${database.connection.characterEncoding}</prop>
+				<!-- 开启二级缓存 -->
+				<prop key="hibernate.cache.use_second_level_cache">${database.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.cache.provider_class">${database.cache.provider_class}</prop>
+				<!-- 开启二级缓存的查询缓存 -->
+				<prop key="hibernate.cache.use_query_cache">${database.cache.use_query_cache}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${database.hbm2ddl.auto}</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+				<prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:/**/po/*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<!--配置hibernate的事务管理器 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 配置AOP事务拦截 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="save*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+			<tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="serviceMethod" expression="execution(* com.etiansoft..service..*.*(..))" />
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+	</aop:config>
+	<tx:annotation-driven transaction-manager="txManager" />
+</beans>

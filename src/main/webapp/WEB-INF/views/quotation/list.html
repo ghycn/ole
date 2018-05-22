@@ -1,0 +1,97 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/cost/coseAnalysis.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/quotation/quotationList.js"></script>
+<script type="text/javascript">var ctx = "${ctx}";</script>
+<script type="text/javascript">
+function closeProject(){
+			var projectCode = $("#projectCode").val();
+			var state="";
+			$.ajax({
+				url:ctx+'/project/closeProject',
+				data:{projectCode:projectCode},
+				type:'post',    
+	    		cache:false,
+	    		dataType:'json',
+	    		async: false,
+	    		success:function(data) { 
+	    			state = data;
+	    		}
+			});
+			if(state=="2"){
+				alert( i18n('global.closeThecaseFail'));
+			}else{
+				alert( i18n('global.closeThecaseSuccess'));
+			}
+	}
+</script>
+<body>
+<@g.close/>
+<h2 style="text-align: center;"><@m.m "quotation.viewQuotation"/></h2>
+<input type="hidden" id="projectCode"  value="${projectCode}"/>
+<div id="coseAnalysisDiv"
+	style="margin-top: 10px; padding: 30px 20px 245px 20px;">
+	<#if status==1> 
+		<#if roleId==6 || roleId==1>
+			<#if userCode==loginUser.userCode>
+				<input type="button" value="<@m.m 'global.add'/>"
+				class="btn btn-default btn-sm" style="float: right; margin: 10px 0;"
+				data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+				href="${ctx}/quotation/addQuotation?projectCode=${projectCode}" />
+			</#if>
+			<#if userCode!=loginUser.userCode>
+				<#if approvalOfPersonnel==loginUser.userCode>
+						<input type="button" value="<@m.m 'global.closeThecase'/>"   class="btn btn-default btn-sm" style='float: right; margin: 10px 0;' onclick="closeProject();" />
+				</#if>
+			</#if>
+		</#if>
+		<#if roleId!=6 &&  roleId!=1>
+			<input type="button" value="<@m.m 'global.add'/>"
+			class="btn btn-default btn-sm" style="float: right; margin: 10px 0;"
+			data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+			href="${ctx}/quotation/addQuotation?projectCode=${projectCode}" />
+		</#if>
+	</#if>
+	<table style="margin-top: 23px;" class="quotation">
+		<tr>
+			<th><@m.m "quotation.name"/></th>
+			<th><@m.m "quotation.customer"/></th>
+			<th><@m.m "quotation.applicant"/></th>
+			<th><@m.m "quotation.caseTime"/></th>
+			<th><@m.m "quotation.taxTotal"/></th>
+			<th><@m.m "global.note"/></th>
+			<th><@m.m "global.status"/></th>
+			<th><@m.m "global.opera"/></th>
+		</tr>
+		<#if quotations??> <#list quotations as quo>
+		<tr>
+			<td>${quo.quotationName}</td>
+			<td>${quo.customerName}</td>
+			<td>${quo.applicant}</td>
+			<td><#if quo.caseTime??>${quo.caseTime}</#if></td>
+			<td>${quo.taxTotal*(taxRate*0.01 + 1)}</td>
+			<td>${quo.note}</td>
+			<td>
+				<#if quo.status==0> <@m.m "global.audit"/> <#elseif
+				quo.status==1> <span style="color: green; font-size: 18px;">√&nbsp;&nbsp;</span><@m.m
+				"global.approve"/> <#elseif quo.status==2> <span
+				style="color: red; font-size: 18px;">×&nbsp;&nbsp;</span><@m.m
+				"global.reject"/> <#elseif quo.status==3> <@m.m "global.invalid"/>
+				</#if>
+			</td>
+			<td><input class="btn btn-default btn-xs"
+				style="width: 50%; float: left; cursor: pointer;"
+				data-toggle="modal" data-target="#modalDiv2" data-backdrop="static"
+				href="${ctx}/quotation/quotationItem?quotationId=${quo.quotationId}&status=${quo.status}&userCode=${userCode}"
+				type="button" value="<@m.m 'quotation.viewQuotationItem'/>">
+				<#if quo.status==2> <input class="btn btn-default btn-xs"
+				style="width: 50%; float: left; cursor: pointer;"
+				data-toggle="modal" data-target="#modalDiv3" data-backdrop="static"
+				href="${ctx}/quotation/edit?quotationId=${quo.quotationId}&trIndex=${quo_index+1}"
+				type="button" value="<@m.m 'global.edit'/>"> </#if></td>
+		</tr>
+		</#list> </#if>
+	</table>
+</div>
+</body>
+</html>

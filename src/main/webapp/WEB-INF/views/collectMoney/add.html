@@ -1,0 +1,61 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/collectMoney/save" method="post" id="collectMoneyForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "collectMoney.add" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="collectMoneyAddTable">
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.name" />：</td>
+					<td>
+						<select class="form-control" name="quotationId">
+							<#list quotations as quotation>
+								<option value="${quotation.quotationId}">${quotation.quotationName}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><@m.m "collectMoney.invoice" />：</td>
+					<td width="77%">
+						<select class="form-control" name="invoice">
+							<option value="false" selected="selected"><@m.m "global.no" /></option>
+							<option value="true"><@m.m "global.yes" /></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><@m.m "collectMoney.sum" />：</td>
+					<td class="controls"><input type="text" placeholder="0.0" class="form-control" name="amount" check-type="number" required-message="<@m.m 'global.numberError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><@m.m "collectMoney.date" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 300px;">
+							<input class="form-control calculate" style="cursor: pointer;width: 370px" size="16" type="text" name="date" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					    </div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><@m.m "collectMoney.toAccount" />：</td>
+					<td>
+						<select class="form-control" name="toAccount">
+							<option value="false" selected="selected"><@m.m "global.no" /></option>
+							<option value="true"><@m.m "global.yes" /></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right"><@m.m "collectMoney.notes" />：</td>
+					<td><input type="text" placeholder="<@m.m "collectMoney.notes" />" class="form-control" name="notes"></td>
+				</tr>
+			</table>
+			<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+</html>

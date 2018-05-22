@@ -1,0 +1,16 @@
+#customerAddTable,#customerEditTable{
+	margin-top: 0px;
+	margin-bottom:10px;
+	border: 1px solid #999;
+	text-align: center;
+	width: 560px;
+}
+
+td{
+	text-align: left;
+	padding: 5px;
+}
+
+.customAdd{
+	border-radius:5px;
+}

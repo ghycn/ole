@@ -1,0 +1,282 @@
+<@g.docType />
+<html>
+<@g.head title="menu.costAnalysisOfSingle">
+<link href="${ctx}/static/css/cost/coseAnalysis.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="${ctx}/static/css/TreeTable.css" />
+<script type="text/javascript"
+	src="${ctx}/static/script/cost/coseAnalysis.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/TreeTable.js"></script>
+<script type="text/javascript"
+	src="${ctx}/static/script/cost/TreeTableCost.js"></script>
+<style>
+.head1{
+	display:none;
+}
+</style>
+</@g.head>
+<body>
+	<@g.top /> <@g.nav />
+	<div id="wrapper">
+		<div id="page-wrapper">
+			<div class="row">
+				<div id="coseAnalysisDiv" style="width: 90%;">
+					<h2 style="text-align: center; margin: 20px 0;">${project.name}-${quotation.activity.name}（${project.projectCode}-${quotation.activity.activityCode}）</h2>
+					<form action="${ctx}/cost/coseAnalysis/save" method="post">
+						<div style="border: 1px solid #797979; padding: 8px;">
+							<input type="hidden" name="projectCode"
+								value="<#if project??>${project.projectCode}</#if>" /> <input
+								type="hidden" name="quotationId" class="quotationId"
+								value="<#if quotation??>${quotation.quotationId}</#if>" /> <input
+								type="hidden" name="costAnalysisId"
+								value="<#if analysis??>${analysis.costAnalysisId}</#if>" />
+								 <input type="hidden" name="taxRate"
+								value="<#if project??>${project.taxRate}</#if>" id="taxRate"/>
+							<table>
+								<tr>
+									<th><@m.m "caselist.caseName"/></th>
+									<td><#if project.name??>${project.name}</#if></td>
+									<th><@m.m "coseAnalysis.otherInvoice"/></th>
+									<td><#if project.customer??> <#if
+										project.customer.name??>${project.customer.name}</#if> </#if>
+									</td>
+									<th><@m.m "quotation.caseNum"/></th>
+									<td><#if
+										project.projectCode??>${project.projectCode}</#if></td>
+								</tr>
+								<tr>
+									<th><@m.m "caselist.executionTime"/></th>
+									<td><#if
+										project.executionTime??>${project.executionTime?string("yyyy-MM-dd")}</#if></td>
+									<th><@m.m "coseAnalysis.otherAddress"/></th>
+									<td><#if project.customer??> <#if
+										project.customer.customerAddress??>${project.customer.customerAddress}</#if>
+										</#if></td>
+									<th></th>
+									<td></td>
+								</tr>
+								<tr>
+									<th><@m.m "coseAnalysis.totalAmount"/></th>
+									<td>
+									<input id="invoiceAmount" type="hidden" value="<#if
+										project.invoiceAmount??>${project.invoiceAmount?string(",##0.00#")}</#if>"/>
+									<#if
+										project.invoiceAmount??>${project.invoiceAmount?string(",##0.00#")}</#if></td>
+									<th><@m.m "coseAnalysis.buttedPerson"/></th>
+									<td><#if
+										project.openStaff.name??>${project.openStaff.name}</#if></td>
+									<th><@m.m "costAnalysis.totalCost"/></th>
+									<td>￥<input id="costs" type="text" name="totalCost"
+										value="${totalAmount}"
+										style="width: 80%;" readonly="readonly" />
+									</td>
+								</tr>
+								<tr>
+									<th><@m.m "costAnalysis.projectPerson"/></th>
+									<td><#if
+										project.openStaff.name??>${project.openStaff.name}</#if></td>
+									<th><@m.m "coseAnalysis.buttedCell"/></th>
+									<td><#if
+										project.openStaff.cellPhone??>${project.openStaff.cellPhone}</#if></td>
+									<th><@m.m "coseAnalysis.grossProfit"/></th>
+									<td>￥<input id="grossProfit2" type="text"
+										value="<#if analysis??>${analysis.grossProfit}</#if>"
+										style="width: 80%;" readonly="readonly" /></td>
+								</tr>
+								<tr>
+									<th><@m.m "caselist.caseTime"/></th>
+									<td><#if
+										project.openTime??>${project.openTime?string("yyyy-MM-dd")}</#if></td>
+									<th><@m.m "coseAnalysis.contractNo"/></th>
+									<td><input type="text" name="contractNo"
+										value="<#if analysis??>${analysis.contractNo}</#if>" /></td>
+									<th><@m.m "coseAnalysis.profitRate"/></th>
+									<td><input id="profitRatio2" type="text"
+										value="<#if analysis??>${analysis.profitRate}</#if>"
+										style="width: 80%;" readonly="readonly" /></td>
+								</tr>
+							</table>
+						</div>
+<!-- 						<table style="margin-top: 23px;">
+							<tr>
+								<th colspan="3" style="border-bottom: none;"><@m.m
+									"coseAnalysis.quotation"/></th>
+								<th colspan="4" style="border-bottom: none;"><@m.m
+									"coseAnalysis.costs"/></th>
+							</tr>
+						</table> -->
+						<div id='quotationItem_table' class="quotationItem"></div>
+						<table style="margin-top: 20px; float: left; width: 45%;">
+							<tr>
+								<th><@m.m "coseAnalysis.type"/></th>
+								<th><@m.m "coseAnalysis.desingAmount"/></th>							
+							</tr>
+							
+							
+							<#list TypeIdList as list>
+									<tr>
+										<td>${list.name}</td>
+										<td>${list.amount}
+										</td>							
+									</tr>
+							</#list>
+<!-- 							<tr>
+								<th rowspan="2"><@m.m "coseAnalysis.designFee"/></th>
+								<td class="title2"><@m.m "coseAnalysis.desingDays"/></td>
+								<td><input type="text" class="innerMoneyKey"
+									name="desingDays"
+									value="<#if analysis??>${analysis.desingDays}</#if>"
+									onkeyup="javascript:$('#daysCost').val($(this).val()*100)" /></td>
+							</tr>
+							<tr>
+								<td class="title2"><@m.m "coseAnalysis.desingAmount"/></td>
+								<td>￥<input type="text" class="innerMoney" id="daysCost"
+									name="desingAmount"
+									value="<#if analysis??>${analysis.desingAmount}<#else>0.00</#if>"
+									readonly="readonly" style="width: 80%;" /></td>
+							</tr>
+							<tr>
+								<th rowspan="2"><@m.m "coseAnalysis.activity"/></th>
+								<td class="title2"><@m.m "coseAnalysis.personTime"/></td>
+								<td><input type="text" class="innerMoneyKey"
+									value="<#if analysis??>${analysis.activeSupportDays}</#if>"
+									name="activeSupportDays"
+									onkeyup="javascript:$('#personCost').val($(this).val()*300)" /></td>
+							</tr>
+							<tr>
+								<td class="title2"><@m.m "coseAnalysis.desingAmount"/></td>
+								<td>￥<input type="text" class="innerMoney" id="personCost"
+									name="activeSupportAmount"
+									value="<#if analysis??>${analysis.activeSupportAmount}<#else>0.00</#if>"
+									readonly="readonly" style="width: 80%;" /></td>
+							</tr>
+							<tr>
+								<th><@m.m "coseAnalysis.otherAmount"/></th>
+								<td colspan="2">￥<input type="text"
+									class="innerMoney innerMoneyKey" name="otherAmount"
+									value="<#if analysis??>${analysis.otherAmount}<#elseif miscel??>${miscel}<#else>0.00</#if>"
+									style="width: 80%;" /></td>
+							</tr>
+							<tr>
+								<th><@m.m "coseAnalysis.relationAmount"/></th>
+								<td colspan="2">￥<input type="text"
+									class="innerMoney innerMoneyKey" name="relationAmount"
+									value="<#if analysis??>${analysis.relationAmount}<#elseif relation??>${relation}<#else>0.00</#if>"
+									style="width: 80%;" /></td>
+							</tr>
+							<tr>
+								<th style="height: 80px;"><@m.m "coseAnalysis.notes"/></th>
+								<td colspan="2"><textarea name="notes"
+										value="<#if analysis??>${analysis.notes}</#if>"><#if analysis??>${analysis.notes}</#if></textarea></td>
+							</tr> -->
+						</table>
+						<table style="margin-top: 20px; float: right; width: 45%;">
+							<tr>
+								<th><@m.m "coseAnalysis.noTaxQuotation"/></th>
+								<td><#assign sum=0/> <#if quotation??> <#list
+									quotation.quotationList as quo> <#if quo.unitPrice?? &&
+									quo.quantity??> <#assign sum=sum + (quo.unitPrice*quo.quantity)
+									/> <#elseif quo.unitPrice??> <#assign sum=sum + quo.unitPrice/>
+									</#if> </#list> </#if> ￥<input id="notTaxesQuotationId"
+									type="text" name="noTaxQuotation"
+									value="<#if analysis??>${analysis.noTaxQuotation}<#else>${sum}</#if>"
+									style="width: 80%;" readonly="readonly" />
+								</td>
+								<th><@m.m "coseAnalysis.invoiceTax"/></th>
+								<td><input type="text" name="invoiceTax"
+									value="" id="taxes" readonly="readonly"/></td>
+							</tr>
+							<tr>
+								<th><@m.m "coseAnalysis.taxQuotation"/></th>
+								<td>￥<input id="quotationId" type="text"
+									name="taxQuotation"
+									value=""
+									style="width: 80%;" readonly="readonly" /></td>
+								<th><@m.m "coseAnalysis.enterpriseTax"/></th>
+								<td>￥<input id="enterpriseTax" type="text"
+									name="enterpriseTax" style="width: 80%;" readonly="readonly" /></td>
+							</tr>
+							<tr>
+								<th><@m.m "coseAnalysis.outCost"/></th>
+								<td>￥<input id="outMoneyTd" type="text" name="outCost"
+									value="<#if amoutTotal??>${amoutTotal}<#else>0.00</#if>"
+									style="width: 80%;" readonly="readonly" /></td>
+								<th><@m.m "coseAnalysis.grossProfit"/></th>
+								<td>￥<input id="grossProfit" type="text" name="grossProfit"
+									value="<#if analysis??>${analysis.grossProfit}</#if>"
+									style="width: 80%;" readonly="readonly" /></td>
+							</tr>
+							<tr>
+								<th><@m.m "coseAnalysis.inCost"/></th>
+								<td>￥<input id="innerMoneyTd" type="text" name="inCost"
+									value="<#if otherAmoutTotal??>${otherAmoutTotal}<#else>0.00</#if>"
+									style="width: 80%;" readonly="readonly" /></td>
+								<th><@m.m "coseAnalysis.profitRate"/></th>
+								<td><input id="profitRatio" type="text" name="profitRate"
+									value="<#if analysis??>${analysis.profitRate}</#if>"
+									style="width: 80%;" readonly="readonly" /></td>
+							</tr>
+							<tr class="buttonTr">
+							<#if applicantCode==loginUser.userCode>
+								<td colspan="2" style="border: none;"><#if analysis??> <#if
+									analysis.status==0> <script type="text/javascript">
+											$(':input').attr('readOnly',true);
+										</script> <input type="button" value="<@m.m 'global.audit'/>"
+									class="btn btn-default" style="width: 90%; margin-top: 15px;" />
+									<#elseif analysis.status==2> <input type="submit"
+									value="<@m.m 'global.edit'/>" class="btn btn-default"
+									style="width: 90%; margin-top: 15px;" /> <#elseif
+									analysis.status==4> <input type="button"
+									value="<@m.m 'coseAnalysis.closeAccounts'/>"
+									class="btn btn-default" style="width: 90%; margin-top: 15px;" />
+									</#if> <#elseif quotation?? && quotation.quotationList?? &&
+									quotation.quotationList?size gt 0> <input type="submit"
+									value="<@m.m 'coseAnalysis.close'/>" class="btn btn-default"
+									style="width: 90%; margin-top: 15px;" /> <#else> <input
+									type="button" value="<@m.m 'coseAnalysis.unableToCheckout'/>"
+									class="btn btn-default" style="width: 90%; margin-top: 15px;" />
+									</#if>
+								</td>
+							</#if>	
+								<#if analysis??><td colspan="2" style="border: none;"><input type="button"
+									value="<@m.m 'global.exportPdf'/>" class="btn btn-default"
+									onclick="window.location.href='${ctx}/cost/coseAnalysis/reportpdf?projectCode=${project.projectCode}&quotationId=${quotation.quotationId}'"
+									style="width: 90%; margin-top: 15px;" /></td></#if>
+							</tr>
+						</table>
+					</form>
+					<table style="margin-top: 305px;"></table>
+					<div class="modal fade" id="select" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<@g.close />
+								<div class="selectbox" style="width: 95%;">
+									<table id="select1">
+										<tr>
+											<th colspan="3"
+												style="border: none; background: none; font-size: 18px;"><@m.m
+												'coseAnalysis.remainFee'/></th>
+										</tr>
+										<tr>
+											<th><@m.m 'coseAnalysis.feeInfo'/></th>
+											<th><@m.m 'coseAnalysis.amount'/></th>
+											<th><@m.m 'global.note'/></th>
+										</tr>
+									</table>
+								</div>
+								<div
+									style="width: 540px; text-align: center; margin: 0 auto; clear: both;">
+									<button type="button" class="btn btn-default"
+										style="width: 150px; margin: 10px 0;" data-dismiss="modal"
+										aria-label="Close"><@m.m 'global.sure'/></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

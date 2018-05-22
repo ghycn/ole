@@ -1,0 +1,72 @@
+body {
+	min-width:1400px;
+	font-size:12px;
+}
+
+#wrapper {
+	margin-top: 20px;
+}
+
+textarea {
+	resize:none;
+}
+
+.panel-body table[myRp="g"]{
+	background: white;
+}
+
+.panel-body table[myRp="g"] th{
+	background-color: #c9c4c1;
+	text-align: center;
+	line-height: 39px;
+	height: 39px;
+}
+
+form[myForm="j&p"],div[myForm="j&p"]{
+	padding-top: 40px;
+	background-color: white;
+	margin: 0 auto;
+	width: 97%;
+	border-radius:0px 0px 8px 8px;
+	padding-bottom: 30px;
+	margin-left: 16px;
+}
+
+.panel-body table {
+	table-layout: fixed;
+}
+
+.panel-body table td {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.tables tr {
+	height: 45px;
+	line-height: 45px;
+}
+
+.panelDiv{
+	height: 190px;
+}
+
+.position{
+	text-align: right;
+}
+
+.positionTd{
+	text-align: center;
+}
+
+.w50 {width:50px;}
+.w60 {width:60px;}
+.w63 {width:63px;}
+.w80 {width:80px;}
+.w90 {width:90px;}
+.w94 {width:94px;}
+.w100 {width:100px;}
+.w102 {width:102px;}
+.w120 {width:120px;}
+.w150 {width:150px;}
+.w200 {width:200px;}

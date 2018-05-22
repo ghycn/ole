@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 厂商 -->
+	<class name="com.etiansoft.ole.po.SuSupplier" table="SU_SUPPLIER">
+		<id name="supplierCode" type="java.lang.Integer">
+			<column name="SUPPLIER_CODE" />
+			<generator class="native" />
+		</id>
+		
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="type" type="java.lang.String">
+			<column name="TYPE" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="bankAccount" type="java.lang.String">
+			<column name="BANK_ACCOUNT">
+				<comment>银行账号</comment>
+			</column>
+		</property>
+		<property name="accountName" type="java.lang.String">
+			<column name="ACCOUNT_NAME">
+				<comment>银行户名</comment>
+			</column>
+		</property>
+		<property name="bankName" type="java.lang.String">
+			<column name="BANK_NAME">
+				<comment>开户行</comment>
+			</column>
+		</property>
+		<property name="branchName" type="java.lang.String">
+			<column name="BRANCH_NAME">
+				<comment>支行名称</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS">
+				<comment>所在地</comment>
+			</column>
+		</property>
+		<property name="officialWebsite" type="java.lang.String">
+			<column name="OFFICIAL_WEBSITE">
+				<comment>官网</comment>
+			</column>
+		</property>
+		<property name="note" type="java.lang.String">
+			<column name="NOTE">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS" not-null="true">
+				<comment>状态</comment>
+			</column>
+		</property>
+		<property name="remove" type="boolean">
+			<column name="REMOVE" not-null="true">
+				<comment>是否删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

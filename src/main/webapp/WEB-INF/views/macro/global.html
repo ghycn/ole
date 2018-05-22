@@ -1,0 +1,144 @@
+<#macro docType>
+<!DOCTYPE html>
+</#macro>
+
+<#macro head title="">
+<head>
+<#if title??>
+	<title><@m.m title/></title>
+</#if>
+<script type="text/javascript">
+	var ctx = "${ctx}";
+	var currentDate = "${currentDate}";
+</script>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="content-type" content="no-cache, must-revalidate" />
+<link href="${ctx}/static/css/index.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/bootstrap/dist/css/bootstrap.min.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bootstrap/css/bootstrap-datetimepicker.min.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/metisMenu/dist/metisMenu.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/dist/css/sb-admin-2.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/font-awesome/css/font-awesome.min.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bootstrap/css/table.css?v=1.0" rel="stylesheet" />
+<link href="${ctx}/static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/bower_components/datatables-responsive/css/dataTables.responsive.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/css/jquery.Jcrop.min.css?v=1.0" rel="stylesheet">
+<link href="${ctx}/static/css/global.css?v=1.0" rel="stylesheet">
+
+<script type="text/javascript" src="${ctx}/script/language.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/bootstrap/js/jquery-2.0.3.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/script/jquery-migrate-1.2.1.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/script/jquery.Jcrop.min.js?v=1.0"></script>
+<script src="${ctx}/static/bower_components/tree/jquery-ui.custom.js" type="text/javascript"></script>
+<script type="text/javascript" src="${ctx}/static/bootstrap/js/bootstrap-datetimepicker.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/bootstrap/dist/js/bootstrap.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/bootstrap/js/bootstrap-table.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/metisMenu/dist/metisMenu.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/dist/js/sb-admin-2.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bootstrap/js/bootstrap-validation.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bootstrap/js/bootstrap-table.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/datatables/media/js/jquery.dataTables.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/script/echarts/esl.js?v=1.0"></script>
+<script type="text/javascript" src="${ctx}/static/script/echarts/graphics.js?v=1.0"></script>
+<input type="hidden" id="rid" value="${roleId}"/>
+
+<script type="text/javascript" src="${ctx}/static/script/global.js?v=1.0"></script>
+<#nested />
+</head>
+</#macro>
+
+<#macro nav>
+<div class="navbar-default sidebar" role="navigation" id="left-menu">
+	<div class="sidebar-nav navbar-collapse" style="margin-top: 20px;">
+		<ul class="nav" id="side-menu">
+			<#list menus as menu>
+				<#if permissions?seq_contains(menu.menuName) && menu.url!='/quotation/list'>
+				<li><a href="${ctx}/browse?menuId=${menu.menuId}"><i class="fa ${menu.icon} fa-fw"></i>&nbsp;&nbsp;<@m.m menu.menuName/><#if menu.menuId==2><div id="divObj" class="badge pull-right" style="float: right;"></div></#if></a></li>
+				</#if>
+			</#list>
+		</ul>
+	</div>
+</div>
+</#macro>
+<#macro top>
+<div style="height: 75px;background: #211f20;">
+<img alt="logo" src="${ctx}/static/images/logo.png" width="130" height="53" style="margin: 11px 20px;display: inline;">
+	<div style="float: right;text-align: center;margin-right:30px;">
+		<ul class="nav navbar-top-links" style="float: left;margin-left: -130px;margin-top: 30px;">
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-language fa-fw"></i> <i class="fa fa-caret-down"></i></a>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('en_US')"><@m.m 'global.english'/></a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('zh_TW')"><@m.m 'global.zhTW'/></a></li>
+					<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('zh_CN')"><@m.m 'global.zhCN'/></a></li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a>
+				<ul class="dropdown-menu dropdown-user">
+					<li><a href="${ctx}/personalData/basicInfo"><i class="fa fa-user fa-fw"></i> <@m.m 'global.userInfo'/></a></li>
+					<li><a href="${ctx}/personalData/changePassword"><i class="fa fa-gear fa-fw"></i> <@m.m 'menu.changePassword'/></a></li>
+					<li class="divider"></li>
+					<li><a href="${ctx}/logout"><i class="fa fa-sign-out fa-fw"></i> <@m.m 'global.logout'/></a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+</#macro>
+
+<#macro close>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position:absolute;top:6px;right:12px;font-size:30px;">
+	<span aria-hidden="true">&times;</span>
+</button>
+</#macro>
+
+<#macro nav_tabs names="" urls="" classes="" active="">
+	<#assign name = names?split(",")>
+	<#assign url = urls ?split(",")>
+	<#assign title_str = "">
+	<#assign action_str = "">
+	<#assign i = 0>
+	<#list name as n>
+<!--jurisdiction 	permissions -->
+		<#if jurisdiction?seq_contains(n)>
+			<#if i != 0>
+				<#assign title_str = title_str + ",">
+				<#assign action_str = action_str + ",">
+			</#if>
+			<#assign title_str = title_str + n>
+			<#assign action_str = action_str + url[n_index]>
+			<#assign i = i+1>
+		</#if>
+	</#list>
+	<#assign titles = title_str?split(",")>
+	<#assign actions = action_str?split(",")>
+
+	<#assign class = classes ?split(",")>
+	<#assign index = 0>
+	<#list titles as title>
+		<#if active==title><#assign index=title_index></#if>
+		<#assign count = title_index>
+	</#list>
+	<ul class="nav nav-tabs nav-default-color">
+	<#list titles as title>
+		<#assign class_index = title_index-index+1>
+		<#if title_index &lt; index>
+			<#assign class_index = class_index + count + 1>
+		</#if>
+		<li<#if active==title> class="active tabcolor1"</#if> style="border-bottom:1px solid #f3a755;"><a href="${ctx}${actions[title_index]}"><#if title!=''><@m.m title /></#if></a></li>
+	</#list>
+	</ul>
+</#macro>
+
+<#macro modal id="" width="">
+	<div class="modal fade" id="${id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" <#if width??>style="width: ${width}px;"</#if>>
+			<div class="modal-content" style="posision:relative"></div>
+		</div>
+	</div>
+</#macro>

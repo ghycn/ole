@@ -1,0 +1,103 @@
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/supplier/supplier.js"></script>
+<@g.close />
+<form action="${ctx}/supplier/save" method="post" id="supplierForm" myForm="j&p">
+	<div class="customAdd" style="border: 1px solid #999;padding:5px 20px 0px 20px; width: 600px;margin: 0 auto;">
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "supplier.add" /></div>
+		<ul class="nav nav-tabs" id="supplierTab">
+			<li class="active"><a href="#info"><@m.m "supplier.info" /></a></li>
+			<li><a href="#supplier"><@m.m "supplier.contactPerson" /></a></li>
+		</ul>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<div class="tab-pane active" id="info">
+				<table id="supplierAddTable"  style="width: 550px;border: 1px solid  #999;">
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.type" />:</td>
+						<td style="text-align:left" id="typeTd">
+							<select class="form-control" name="type" id="type">
+								<#list types as type>
+									<option value="${type.name}">${type.name}</option>
+								</#list>  
+							</select>
+						</td>
+						<td>
+							<img style="height: 20px;cursor: pointer;" onclick="inputSupType()" src="${ctx}/static/images/add.png">
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.name" />:</td>
+						<td class="controls" style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.name' />" class="form-control" name="name" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.address" />:</td>
+						<td class="controls" style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.address' />" class="form-control" name="address"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.officialWebsite" />:</td>
+						<td class= "controls" style="text-align:left"><input type="text" placeholder="http://www.baidu.com" class="form-control" name="officialWebsite"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.bankAccount" />:</td>
+						<td style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.bankAccount'/>" class="form-control" name="bankAccount"></textarea>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.bankName" />:</td>
+						<td style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.bankName' />" class="form-control" name="bankName"></textarea>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.branchName" />:</td>
+						<td style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.branchName' />" class="form-control" name="branchName"></textarea>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.accountName" />:</td>
+						<td style="text-align:left"><input type="text" placeholder="<@m.m 'supplier.accountName'/>" class="form-control" name="accountName"></textarea>
+						<td></td>
+					</tr>
+					<tr>
+						<td style="text-align:right"><@m.m "supplier.note" />:</td>
+						<td style="text-align:left"><textarea class="form-control" placeholder="<@m.m 'supplier.note' />" rows="3" name="note"></textarea>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="tab-pane" id="supplier">
+				<div style="width:540px; border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+					<div id="cloneDiv"></div>
+					<div style="width: 510px;;text-align: right;margin-bottom: 10px;">
+						<button type="button" class="btn btn-default" style="text-align: right;" onclick="addSupplier()"><@m.m "customer.addContact" /></button>
+					</div>
+				</div>
+			</div>
+			<input type="submit" onclick="return save();" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;"/>
+		</div>
+	</div>
+</form>
+<div id="cloneTableDiv">
+	<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 525px;display: none;">
+		<tr>
+			<td><@m.m "supplier.fullName" />:</td>
+			<td class="controls"><input type="text" placeholder="<@m.m 'supplier.fullName' />" class="form-control name" name="contacts[0].name" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td><@m.m "supplier.tel" />:</td>
+			<td class="controls"><input type="text" placeholder="010-7232122" class="form-control tel" name="contacts[0].tel" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td rowspan="3" style="vertical-align: top;cursor: pointer;" class="deleteSupplier">X</td>
+		</tr>
+		<tr>
+			<td><@m.m "supplier.mobile" />:</td>
+			<td class="controls"><input type="text" placeholder="13522785612" class="form-control mobile" name="contacts[0].mobile" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+			<td class="controls"><input type="text" class="form-control extension" name="contacts[0].extension"></td>
+		</tr>
+		<tr>
+			<td><@m.m "supplier.email" />:</td>
+			<td class="controls"><input type="text" placeholder="abc@@ole-ad.com" class="form-control email" name="contacts[0].email" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+			<td></td>
+			<td class="controls"></td>
+		</tr>
+	</table>
+</div>

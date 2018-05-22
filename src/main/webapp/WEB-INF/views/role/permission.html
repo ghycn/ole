@@ -1,0 +1,42 @@
+<@g.close />
+<script type="text/javascript">
+function selectAll() {
+	$("#permissionTree").dynatree("getRoot").visit(function(node) {
+		node.select(true);
+	});
+}
+function unselectAll() {
+	$("#permissionTree").dynatree("getRoot").visit(function(node) {
+		node.select(false);
+	});
+}
+</script>
+
+<form action="javascript:savePermission();" method="post" id="permissionForm" myForm="j&p">
+	<input type="hidden" id="roleId" name="roleId" value="${roleId}" />
+	<input type="hidden" id="permissions" name="permissions" value="${permissions}" /><br />
+	<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "role.setPermission" /></div>
+	<div id="permissionTree" style=" overflow:relative; width:562px; height:400px;" margin-left:55px;></div>
+	<div class="tab-content" style="text-align: center;">
+		<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal" />
+		<input type="button" value="<@m.m 'global.selectAll' />" class="btn btn-default" onclick="selectAll();" style="margin: 10px 0;" />
+		<input type="button" value="<@m.m 'global.unselectAll' />" class="btn btn-default" onclick="unselectAll();" style="margin: 10px 0;" />
+		<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+	</div>
+</form>
+
+<script type="text/javascript">
+	$.post(ctx + '/role/permissionTree', {roleId:${roleId}}, function(treeData) {
+		$("#permissionTree").dynatree({
+			checkbox : true,
+			selectMode : 2,
+			children : treeData,
+			onSelect: function(select, node) {
+				var selKeys = $.map(node.tree.getSelectedNodes(), function(node) {
+					return node.data.key;
+				});
+				$("#permissions").val(selKeys.join(","));
+			}
+		});
+	});
+</script>

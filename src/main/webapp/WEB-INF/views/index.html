@@ -1,0 +1,63 @@
+<@g.docType />
+<html>
+<@g.head title="global.index">
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/report.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/wkOvertime/report.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/project/report.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/cost/totalCostReport.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/cost/dailyaverageReport.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/cost/grossProfitReport.js"></script>
+</@g.head>
+</head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div>
+				<#if !isBoss>
+					<input type="hidden" value="${loginUser.userCode}" id="userCode"/>
+				</#if>
+				<div class="panel panel-default" style="width: 48%;float: left;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/wkLeave/report"><@m.m "menu.employeesLeaveReports"/></a>
+					</div>
+					<div id="wkLeaveReport" class="panelDiv"></div>
+				</div>
+				<div class="panel panel-default" style="width: 48%;float: left;margin-left: 20px;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/wkOvertime/report"><@m.m "menu.overtimeReports"/></a>
+					</div>
+					<div id="wkOvertimeReport" class="panelDiv"></div>
+				</div>
+				<div class="panel panel-default" style="width: 48%;float: left;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/project/report"><@m.m "menu.annualReportsTheNumberOfOpenCases"/></a>
+					</div>
+					<div id="prProjectReport" class="panelDiv"></div>
+				</div>
+				<div class="panel panel-default" style="width: 48%;float: left;margin-left: 20px;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/costAnalysis/totalCost/report"><@m.m "menu.theTotalCostToOpenTheCaseReport"/></a>
+					</div>
+					<div id="totalCostReport" class="panelDiv"></div>
+				</div>
+				<div class="panel panel-default" style="width: 48%;float: left;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/costAnalysis/dailyaverage/report"><@m.m "menu.openDailyAverageCaseCostReport"/></a>
+					</div>
+					<div id="dailyaverageReport" class="panelDiv"></div>
+				</div>
+				<div class="panel panel-default" style="width: 48%;float: left;margin-left: 20px;">
+					 <div class="panel-heading">
+						<i class="fa fa-bar-chart-o fa-fw"></i><a href="${ctx}/costAnalysis/grossProfit/report"><@m.m "menu.grossProfitOpenCaseReports"/></a>
+					</div>
+					<div id="grossProfitReport" class="panelDiv"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

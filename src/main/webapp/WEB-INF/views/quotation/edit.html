@@ -1,0 +1,53 @@
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/quotation/quotation.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<script type="text/javascript">var trIndex = "${trIndex}";</script>
+<@g.close />
+<input type="hidden" value="${projectName}" id="projectName" />
+<form action="" method="post" style="margin:0px 20px;" id="quotationForm">
+	<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "quotation.editQuotation" /></div>
+	<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<input type="hidden" value="${quotation.quotationId}" name="quotationId"/>
+		<input type="hidden" value="${quotation.taxTotal}" id="taxTotal"/>
+		<input type="hidden" value="${loginUser.name}" id="applicant"/>
+		<table id="quotationEditTable">
+			<tr>
+<!-- 				<td style="text-align: right;"><@m.m "quotation.customer" />：</td> -->
+				<td>
+					<input class="form-control" type="hidden" value="${quotation.prProject.projectCode}" name="prProject.projectCode" readonly="readonly"/>
+					<input type="hidden" name="customer.customerCode" value="${customerCode}">
+					<input type="hidden" id="customerName"  value="${customerName}">
+<!-- 					<select class="form-control" name="customer.customerCode" id="customerCode" style="width: 435px;"> -->
+<!-- 						<#list customers as customer> -->
+<!-- 							<option value="${customer.customerCode}" <#if customer.customerCode==quotation.customer.customerCode>selected="selected"</#if>>${customer.name}</option> -->
+<!-- 						</#list> -->
+<!-- 					</select> -->
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: right;"><@m.m "activity.name" />：</td>
+				<td>
+					<select class="form-control" name="activity.activityCode" id="activityCode" style="width: 435px;">
+						<#list activitys as activity>
+							<option value="${activity.activityCode}">${activity.name}</option>
+						</#list>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: right;"><@m.m "quotation.caseTime" />：</td>
+				<td>
+					<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 435px;">
+						<input class="form-control calculate" size="16" type="text" id="caseTime" style="cursor: pointer;" name="casetime" value="<#if quotation.caseTime??>${quotation.caseTime?string('yyyy-MM-dd')}<#else>${currentDate}</#if>" readonly>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</td>				
+			</tr>
+			<tr>
+				<td style="text-align: right;"><@m.m "global.note" />：</td>
+				<td><textarea class="form-control" id="note" value="${quotation.note}" placeholder="<@m.m 'global.note' />" rows="3" name="note" style="width: 435px;">${quotation.note}</textarea></td>
+			</tr>
+		</table>
+		<input type="button" value="<@m.m 'global.edit' />" onclick="edit();" class="btn btn-default" style="width:200px;margin: 20px 0;"/>
+	</div>
+</form>

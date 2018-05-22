@@ -1,0 +1,34 @@
+<@g.docType />
+<html>
+<@g.head title="menu.customerList">
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/customer/customer.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/customer/customerList.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs names="menu.customerList" urls="/custom/list" active="menu.customerList"/>
+				<div class="tableSearch">
+					<label><@m.m "customer.companyName" />:</label>
+					<input class="form-control input-sm" id="name" name="name" style="width: 200px; display: inline;">
+					<button class="btn btn-default btn-sm" type="button" onclick="search('customerList-dataTable')"><@m.m "global.query" /></button>
+					<button class="btn btn-default btn-sm" type="button" onclick="javascript:window.location.href='${ctx}/custom/exportPdf'"><@m.m "global.exportPdf" /></button>
+					<button class="btn btn-default btn-sm" typw="button" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/custom/type"><@m.m "customer.classification" /></button>
+					<button class="btn btn-default btn-sm" typw="button" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/custom/add"><@m.m "menu.customerContact" /></button>
+				</div>
+			</div>
+			<@g.modal id="modalDiv" width="700"/>
+			<input id="roleId" type="hidden" value="${roleId}">
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover" style="text-align: center;" id="customerList-dataTable" myRp="g"></table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

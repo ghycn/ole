@@ -1,0 +1,102 @@
+<@g.docType />
+<html>
+<script type="text/javascript" src="${ctx}/static/script/wkLeave/apply.js"></script>
+<body>
+	<form action="${ctx}/wkOvertime/apply/addOrUpdate" method="post" id="WkOverCh" style="margin:0px 20px;">
+		<@g.close />
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;margin: 10px auto;"><@m.m "wkOvertime.application" /></div>
+		<table class="tables" style="width: 90%;text-align: center;margin-left: 20px;">
+			<input type="hidden" name="approvalOfPersonnelName" id="approvalOfPersonnelName" >
+			<tr>
+				<td><@m.m "wkLeave.startDate" />：</td>
+				<td>
+					<input type="hidden" value="${wkOvertime.overtimeId}" id="overtimeId" name="overtimeId"/>
+					<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 350px;">
+						<input class="form-control calculate" size="16" type="text" style="cursor: pointer;" name="start" value="<#if wkOvertime.startDate??>${wkOvertime.startDate}<#else>${currentDate}</#if>" readonly>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						<select class="form-control" id="timeStart" name="startDateSlot" onchange="checkTimes()">
+							<option value="0" <#if !wkOvertime.startDateSlot>selected="selected"</#if>><@m.m "global.morning" /></option>
+							<option value="1" <#if wkOvertime.startDateSlot>selected="selected"</#if>><@m.m "global.afternoon" /></option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.endDate" />：</td>
+				<td>
+					<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 350px;">
+						<input class="form-control calculate" size="16" type="text" style="cursor: pointer;" name="end" value="<#if wkOvertime.endDate??>${wkOvertime.endDate}<#else>${currentDate}</#if>" readonly>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						<select class="form-control" id="timeEnd" name="endDateSlot" onchange="checkTimes()">
+							<option value="0" <#if !wkOvertime.endDateSlot>selected="selected"</#if>><@m.m "global.morning" /></option>
+							<option value="1" <#if wkOvertime.endDateSlot>selected="selected"</#if>><@m.m "global.afternoon" /></option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><@m.m "wkLeave.appDays" />：</td>
+				<td><input type="text" readonly="readonly"  style="width: 350px;" class="form-control" name="duration" value="<#if wkOvertime.duration??>${wkOvertime.duration}<#else>0.5</#if>"></td>
+			</tr>
+			<tr>
+					<td ><@m.m "customer.approver" />：</td>
+					<td class="controls">
+						<select class="form-control" name="approvalOfPersonnel" id="approvalOfPersonnel"   style="width: 350px;">
+							<option value=""><@m.m "global.pleaseChoose" /></option>
+							<#list users as user>
+								<option value="${user.userCode}" <#if wkOvertime.approvalOfPersonnel==user.userCode>selected="selected"</#if>>${user.name}</option>
+							</#list>
+						</select>
+					</td>
+			</tr>
+			<tr>
+				<td><@m.m "global.note" />:</td>
+				<td align="left"><textarea rows="6"  cols="50" name="notes" id="notes"  class="form-control"></textarea></td>
+			</tr>
+		</table>
+		<div style="margin: 20px 0;text-align: center;width: 100%;">
+			<#if wkOvertime.overtimeId??>
+				<input type="submit" onclick="return checkLength();"  value="<@m.m 'global.edit' />" class="btn btn-default"/>
+				<#else>
+				<input type="submit" onclick="return checkLength();" value="<@m.m 'wkLeave.applyOvertime' />" class="btn btn-default"/>
+			</#if>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+		</div>
+	</form>
+<script type="text/javascript">
+	$('.clear_date').datetimepicker({
+// 		endDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+	
+	
+	function checkLength(){
+		var approvalOfPersonnel=$("#approvalOfPersonnel").val();
+		if(approvalOfPersonnel==""){
+			alert(i18n('customer.chooseApprovalPerson'));
+			return  false;
+		}
+		
+		var obj = document.getElementById("approvalOfPersonnel");
+		var index = obj.selectedIndex; //序号，取当前选中选项的序号
+		var val = obj.options[index].text;
+		
+		$("#approvalOfPersonnelName").val(val);
+		
+		var notes = $("#notes").val();
+		if(notes.length>1000){
+			alert("长度不能大于1000;")
+			return false;
+		}else{
+			return true;
+		}
+	}
+</script>
+</body>
+</html>

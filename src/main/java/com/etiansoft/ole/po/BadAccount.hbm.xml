@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 坏账表 -->
+	<class name="com.etiansoft.ole.po.BadAccount" table="BAD_ACCOUNT">
+		<id name="badId" type="java.lang.Integer" column="BAD_ID">
+			<generator class="native" />
+		</id>
+		<many-to-one name="projectCode" />
+		<many-to-one name="quotation" column="QUOTATION_ID"/>
+		<many-to-one name="applicant" column="APPLICANT"/>
+		<property name="reason" type="java.lang.String">
+			<column name="REASON">
+				<comment>坏账原因</comment>
+			</column>
+		</property>
+		<property name="total" type="java.lang.Double">
+			<column name="TOTAL">
+				<comment>金额</comment>
+			</column>
+		</property>
+		<property name="createTime" type="java.sql.Timestamp">
+			<column name="CREATE_TIME">
+				<comment>创建时间</comment>
+			</column>
+		</property>
+		<property name="note" type="java.lang.String">
+			<column name="NOTE">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS">
+				<comment>审批状态</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,109 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/customer/customer.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/custom/update" method="post" style="margin-left: 70px;" id="customForm">
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "customer.editCustomer" /></div>
+		<ul class="nav nav-tabs nav-tabs-table" id="customTab">
+			<li class="active"><a href="#customInfo"><@m.m "customer.customerInfo" /></a></li>
+			<li><a href="#customContact"><@m.m "customer.contactPerson" /></a></li>
+		</ul>
+		<input type="hidden" value="${customer.status}" id="customerStatus"/>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;width:560px;">
+			<div class="tab-pane active" id="customInfo">
+				<table id="customerEditTable">
+					<tr>
+						<td style="text-align: right;"><@m.m "customer.classification" />：</td>
+						<td>
+							<select class="form-control" name="type" id="type">
+								<#list customerTypes as customerType>
+									<option value="${customerType.name}" <#if customerType.name==customer.type>selected="selected"</#if>>${customerType.name}</option>
+								</#list>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;">
+							<@m.m "customer.companyName" />：<br/>
+							<span style="color: red;font-size: 12px;"><@m.m "global.invoice" /></span>
+						</td>
+						<td class="controls">
+							<input type="hidden" name="customerCode" value="${customer.customerCode}"/>
+							<input type="text" class="form-control" name="name" value="${customer.name}" check-type="required" required-message="<@m.m 'global.notNull' />">
+						</td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "customer.location" />：</td>
+						<td class="controls"><input type="text" class="form-control" name="customerAddress" value="${customer.customerAddress}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "customer.officialWebsite" />：</td>
+						<td class="controls"><input type="text" class="form-control" name="officialWebsite" value="${customer.officialWebsite}" check-type="web" web-message="<@m.m 'global.webSiteError' />"></td>
+					</tr>
+					<tr>
+						<td style="text-align: right;"><@m.m "customer.note" />：</td>
+						<td><textarea class="form-control" rows="3" name="note" value="${customer.note}">${customer.note}</textarea>
+					</tr>
+				</table>
+			</div>
+			<div class="tab-pane" id="customContact">
+				<div style="border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+					<div id="cloneDiv">
+						<#list customer.contacts as contact>
+						<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 535px;">
+							<tr>
+								<td style="text-align: right;"><@m.m "customer.fullName" />：</td>
+								<td class="controls">
+									<input type="hidden" name="contacts[${contact_index}].customerContactId" value="${contact.customerContactId}"/>
+									<input type="text" value="${contact.customContactName}" class="form-control" name="contacts[${contact_index}].customContactName" check-type="required" required-message="<@m.m 'global.notNull' />">
+								</td>
+								<td style="text-align: right;"><@m.m "customer.tel" />：</td>
+								<td class="controls"><input type="text" value="${contact.tel}" class="form-control" name="contacts[${contact_index}].tel" check-type="required" tel-message="<@m.m 'global.notNull' />"></td>
+								<td rowspan="2" style="vertical-align: top;cursor: pointer;" class="deleteCustom" onclick="deleteContact('${contact.customerContactId}')">X</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;"><@m.m "customer.mobile" />：</td>
+								<td class="controls"><input type="text" value="${contact.mobile}" class="form-control" name="contacts[${contact_index}].mobile" check-type="required" cellPhone-message="<@m.m 'global.notNull' />"></td>
+								<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+								<td class="controls"><input type="text" value="${contact.extension}"  class="form-control extension" name="contacts[${contact_index}].extension" ></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;"><@m.m "customer.email" />：</td>
+								<td class="controls"><input type="text" value="${contact.email}" class="form-control" name="contacts[${contact_index}].email" check-type="required" mail-message="<@m.m 'global.notNull' />"></td>
+							</tr>
+						</table>
+						</#list>
+					</div>
+					<div style="width: 540px;;text-align: right;margin-bottom: 10px;">
+						<button type="button" class="btn btn-default" style="text-align: right;" onclick="addCustom()"><@m.m "customer.addContact" /></button>
+					</div>
+				</div>
+			</div>
+			<input type="submit" value="<@m.m 'global.edit' />" class="btn btn-default" style="width:200px;margin: 20px 0;"/>
+		</div>
+	</form>
+	<div id="cloneTableDiv">
+		<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 535px;display: none;">
+			<tr>
+				<td><@m.m "customer.fullName" />：</td>
+				<td class="controls"><input type="text" class="form-control name" name="contacts[0].customContactName" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				<td><@m.m "customer.tel" />：</td>
+				<td class="controls"><input type="text" class="form-control tel" name="contacts[0].tel" check-type="required" tel-message="<@m.m 'global.notNull' />"></td>
+				<td rowspan="2" style="vertical-align: top;cursor: pointer;" class="deleteCustom">X</td>
+			</tr>
+			<tr>
+				<td><@m.m "customer.mobile" />：</td>
+				<td class="controls"><input type="text" class="form-control mobile" name="contacts[0].mobile" check-type="required" cellPhone-message="<@m.m 'global.notNull'/>"></td>
+				<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+				<td class="controls"><input type="text" class="form-control extension" name="contacts[0].extension" ></td>
+			</tr>
+			<tr>
+				<td><@m.m "customer.email" />：</td>
+				<td class="controls"><input type="text" class="form-control email" name="contacts[0].email" check-type="required" mail-message="<@m.m 'global.notNull' />"></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

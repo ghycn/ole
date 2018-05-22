@@ -1,0 +1,49 @@
+<@g.docType />
+<html>
+<script type="text/javascript" src="${ctx}/static/script/user/role.js"></script>
+<@g.close />
+<body>
+	<form action="" method="post" id="setProjectForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "user.setProject" /></div>
+		<input type="hidden" value="${userCode}" name="userCode" id="userCode"/>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="userSetProjectTable" style="margin-top:22px;" width="100%;">
+				<tr>
+					<td><lable style="text-align: center;font-size: 14px;font-weight: bolder;">存在的项目</lable></td>
+					<td></td>
+					<td><lable style="text-align: center;font-size: 14px;font-weight: bolder;">被分配的项目</lable></td>
+				</tr>
+				<tr>
+				<div>
+				<td height="300" align="left" >
+					<select class="btn btn-default" name="brandlist" id="brand_sel" multiple="false" style="width:220px;height:300px" >
+						<#list projects as project>
+							<option value="${project.projectCode}">${project.name}</option>
+						</#list>
+					</select>
+				</td>
+				</div>      
+				<div style="margin-left:9px;">
+				<td width="75px;" align="center" >
+					<input type="button" class="btn btn-default btn-sm" value=" 添加项目→ " onclick="javascript:rightMove();"/><br/><br/>
+					<input type="button" class="btn btn-default btn-sm" value=" ←移除项目 " onclick="javascript:leftMove();"/><br/><br/>
+					<input type="button" class="btn btn-default btn-sm" value=" 重置 " onclick="javascript:clean();"/>
+				</td>
+				</div>
+				<div style="margin-right:8px;">
+				<td height="300" >
+					<select  class="btn btn-default" id="choose_sel" name="projectCodes" multiple="true" style="width:220px;height:300px">
+ 						<#list userProjects as project>
+							<option value="${project.projectCode}" selected="selected">${project.name}</option>
+						</#list>
+					</select>
+				</td>
+				</div>
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+			<input type="button" value="<@m.m 'global.save' />" onclick="saveSetProjects()" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+</html>

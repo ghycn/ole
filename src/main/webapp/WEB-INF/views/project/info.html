@@ -1,0 +1,50 @@
+<style>td{padding: 5px;text-align: left;}</style>
+<@g.close />
+<div class="tab-content" myForm="j&p" style="text-align: center;padding-bottom: 5px;">
+	<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "global.info" /></div>
+	<table id="projectAddTable" style="text-align: center">
+		<tr>
+			<td style="text-align: right;"><@m.m "quotation.caseNum" />：</td>
+			<td><input type="text" class="form-control" value="${project.projectCode}" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "quotation.caseName" />：</td>
+			<td><input type="text" class="form-control" value="${project.name}" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.companyName" />：</td>
+			<td><input type="text" class="form-control" value="${project.customerName}" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.openCasePeople" />：</td>
+			<td><input type="text" class="form-control" value="${project.openStaffName}" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.caseTime" />：</td>
+			<td>
+				<input type="text" class="form-control" value="${project.openTime}" readonly="readonly" style="width: 450px;"/>
+			</td>				
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.executionTime" />：</td>
+			<td>
+				<input type="text" class="form-control" value="${project.executionTime}" readonly="readonly" style="width: 450px;"/>
+			</td>				
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.closeTime" />：</td>
+			<td>
+				<input type="text" class="form-control" value="${project.closeTime}" readonly="readonly" style="width: 450px;"/>
+			</td>			
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "caselist.invoice" />：</td>
+			<td><input type="text" class="form-control" value="<#if project.invoiceAmount??>${project.invoiceAmount?string('##0.00#')}<#else>0.00</#if>" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+		<tr>
+			<td style="text-align: right;"><@m.m "global.note" />：</td>
+			<td><input type="text" class="form-control" value="${project.notes}" readonly="readonly" style="width: 450px;"/></td>
+		</tr>
+	</table>
+	<input type="button" value="<@m.m 'global.sure' />" class="btn btn-default" data-dismiss="modal" style="width:150px;margin: 20px 0;"/>
+</div>

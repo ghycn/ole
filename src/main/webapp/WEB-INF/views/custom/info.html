@@ -1,0 +1,108 @@
+<style>td{padding: 5px;text-align: left;}</style>
+<@g.close />
+<div class="customAdd" style="border: 1px solid black; padding:5px 20px 0px 20px; width: 600px;margin: 30px auto;">
+	<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "global.info" /></div>
+	<ul class="nav nav-tabs" id="customTab">
+		<li class="active"><a href="#customerTable"><@m.m "customer.customerInfo" /></a></li>
+		<li><a href="#customerContactTable"><@m.m "customer.contactPerson" /></a></li>
+		<li ><a href="#payForTable"><@m.m "customer.quotationRecord" /></a></li>
+	</ul>
+	<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<div class="tab-pane active" id="customerTable">
+			<table style="margin-top: 0px;margin-bottom:10px; border: 1px solid #999;text-align: center;width: 560px;">
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.serialNumber" />：</td>
+					<td>${customer.customerCode}</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.classification" />：</td>
+					<td>${customer.type}</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.companyName" />：</td>
+					<td>${customer.name}</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.location" />：</td>
+					<td>${customer.customerAddress}</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.officialWebsite" />：</td>
+					<td>${customer.officialWebsite}</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.note" />：</td>
+					<td>${customer.note}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="tab-pane" id="customerContactTable">
+			<div style="border: 1px solid #999;padding: 10px;padding-bottom: 0px;">
+				<#list contacts as contact>
+					<table style="border: 1px solid #999;margin-top:0px;margin-bottom:10px;width: 535px;">
+						<tr>
+							<td style="text-align: right;"><@m.m "customer.fullName" />：</td>
+							<td style="text-align: left;">${contact.customContactName}</td>
+							<td style="text-align: right;"><@m.m "customer.tel" />：</td>
+							<td style="text-align: left;">${contact.tel}</td>
+						</tr>
+						<tr>
+							<td style="text-align: right;"><@m.m "customer.mobile" />：</td>
+							<td style="text-align: left;">${contact.mobile}</td>
+							<td style="text-align: right;"><@m.m "customer.extension" />：</td>
+							<td style="text-align: left;">${contact.extension}</td>
+						</tr>
+						<tr>
+							<td style="text-align: right;"><@m.m "customer.email" />：</td>
+							<td style="text-align: left;">${contact.email}</td>
+							<td style="text-align: right;"></td>
+							<td style="text-align: left;"></td>
+						</tr>
+					</table>
+				</#list>
+				<#if contacts?size==0>
+					<@m.m "customer.noContacts" />
+				</#if>
+			</div>
+		</div>
+		<div class="tab-pane" id="payForTable">
+		<br>
+					<input type="hidden" id="customerCode" value="${customerCode}">
+					<select name="yearValue" onchange="chooseYear(this.value);">
+						<option value=""><@m.m "wkLeave.whole" /></option>
+						<#list yearList as years>
+							<option value="${years.yearValue}">${years.yearName}</option>
+						</#list>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span  ><@m.m "supplier.amount" />：</span>
+					<span  id="money">${money}</span>
+		</div>
+		<input type="button" value="<@m.m 'global.sure' />" class="btn btn-default" data-dismiss="modal" style="width:200px;margin: 20px 0;"/>
+	</div>
+</div>
+<script>
+$('#customTab a:first').tab('show');
+$('#customTab a').click(function(e) {
+	e.preventDefault();
+	$(this).tab('show');
+});
+
+function chooseYear(yearValue){
+		var customerCode = $("#customerCode").val();
+		var  a="";
+		$.ajax({
+			url:ctx+'/custom/chooseYear',
+			data:{yearValue:yearValue,customerCode:customerCode},
+			type:'post',    
+    		cache:false,
+    		dataType:'json',
+    		async: false,
+    		success:function(data) { 
+				a= data;
+    		}
+		});
+// 		document.getElementById("money").innerHTML =a;
+		$("#money").text(a);
+}
+</script>

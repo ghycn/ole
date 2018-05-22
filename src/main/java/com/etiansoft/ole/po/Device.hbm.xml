@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 设备 -->
+	<class name="com.etiansoft.ole.po.Device" table="DEVICE">
+		<id name="deviceCode" type="java.lang.Integer">
+			<column name="DEVICE_CODE" />
+			<generator class="native" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="NAME">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="total" type="java.lang.Integer">
+			<column name="TOTAL">
+				<comment>总数量</comment>
+			</column>
+		</property>
+		<property name="staffHoldNum" type="java.lang.Integer">
+			<column name="STAFFHOLD_NUM">
+				<comment>员工持有数量</comment>
+			</column>
+		</property>
+		<property name="stockNum" type="java.lang.Integer">
+			<column name="STOCK_NUM">
+				<comment>库存数量</comment>
+			</column>
+		</property>
+		<property name="remove" type="boolean">
+			<column name="REMOVE">
+				<comment>删除状态</comment>
+			</column>
+		</property>
+		<property name="buyingTime" type="date">
+			<column name="BUYING_TIME">
+				<comment>购买时间</comment>
+			</column>
+		</property>
+		<property name="expirationDate" type="date">
+			<column name="EXPIRATION_DATE">
+				<comment>到期日期</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

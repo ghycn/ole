@@ -1,0 +1,47 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/quotation/quotation.js"></script>
+<body>
+	<form action="" method="post" style="margin:0px 20px;" id="quotationItemForm">
+		<@g.close />
+		<div style="text-align: center;margin-top: 10px;font-size: 16px;font-weight: bolder;"><@m.m "quotation.editQuotationItem" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<input type="hidden" name="quotationId" value="${quotationId}"/>
+			<input type="hidden" value="${quotationItem.quotationListId}" name="quotationListId"/>
+			<table id="quotationItemEditTable" style="margin-left: 64px">
+				<tr>
+					<td><@m.m "quotation.category" />：</td>
+					<td class="controls" style="width: 80%"><input type="text" class="form-control" name="category" value="${quotationItem.category}" check-type="required" required-message="<@m.m 'global.notNull'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "device.name" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="item" value="${quotationItem.item}" check-type="required" required-message="<@m.m 'global.notNull'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.amount" />：</td>
+					<td class="controls"><input type="text" id="quantity" class="form-control" oninput="total()" name="quantity" value="${quotationItem.quantity}" check-type="number" number-message="<@m.m 'global.numberError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.unitPrice" />：</td>
+					<td class="controls"><input type="text" class="form-control" id="unitPrice" oninput="total()" name="unitPrice" value="${quotationItem.unitPrice}" check-type="number" number-message="<@m.m 'global.numberError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.total" />：</td>
+					<td class="controls"><input type="text" class="form-control" readonly="readonly" id="subTotal" name="subTotal" value="${quotationItem.subTotal}" check-type="number" number-message="<@m.m 'global.numberError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "quotation.specification" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="spec" value="${quotationItem.spec}" check-type="length" length-message="<@m.m 'global.lengthError'/>"></td>
+				</tr>
+				<tr>
+					<td><@m.m "global.note" />：</td>
+					<td><input type="text" class="form-control" name="note" value="${quotationItem.note}"></td>
+				</tr>
+			</table>
+			<input type="submit" value="<@m.m 'global.edit' />" class="btn btn-default" style="width:200px;margin: 20px 0;"/>
+		</div>
+	</form>
+</div>
+</body>
+</html>

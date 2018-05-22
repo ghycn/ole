@@ -1,0 +1,106 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<@g.close />
+<body>
+	<form action="${ctx}/user/save" method="post" id="userForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "user.addUser" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="userAddTable" width="550">
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userName" />：</td>
+					<td style="text-align: left; class = "controls"><input type="text" class="form-control" name="name" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userSex" />：</td>
+					<td style="text-align: left;"><select class="form-control" name="sex">
+							<option value="false"><@m.m "sys.man" /></option>
+							<option value="true"><@m.m "sys.women" /></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userPosition" />：</td>
+					<td style="text-align: left;">
+						<select name="type" class="form-control" id="type">
+							<#list roles as role>
+								<option value="${role.name}">${role.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<#if loginUser.boss>
+				<tr>
+					<td style="text-align: right;"><@m.m "user.salary" />：</td>
+					<td style="text-align: left;" class="controls"><input type="text" class="form-control" name="baseSalary" placeholder="0.0"></td>
+				</tr>
+				</#if>
+				<tr>
+					<td style="text-align: right;"><@m.m "global.password" />：</td>
+					<td style="text-align: left;" class="controls"><input type="password" placeholder="<@m.m 'global.ppasswordError' />" class="form-control" name="password" check-type="password" password-message="<@m.m 'global.ppasswordError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.mobile" />：</td>
+					<td style="text-align: left;" class="controls"><input type="text" placeholder="13522785612" class="form-control" name="cellPhone" check-type="cellPhone" cellPhone-message="<@m.m 'global.cellPhoneError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "supplier.email" />：</td>
+					<td style="text-align: left;" class="controls"><input type="text" class="form-control" placeholder="abc@@ole-ad.com" name="mail" check-type="mail" mail-message="<@m.m 'global.mailError' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "perfile.birthday" />：</td>
+					<td style="text-align: left;">
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 457px;">
+							<input id="birth" class="form-control calculate" style="cursor: pointer; width: 430px;" size="16" type="text" name="birth" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.entryDate" />：</td>
+					<td style="text-align: left;">
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 457px;">
+							<input id="hiredate" class="form-control calculate" style="cursor: pointer; width: 430px;" size="16" type="text" name="hiredate" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+			<input type="submit" onclick="return check()" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+	<script type="text/javascript">
+		$('#userForm').validation();
+		$('.clear_date').datetimepicker({
+			endDate: currentDate,
+			weekStart: 1,
+			todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+		//校验入职日期是否大于出生日期
+		function check(){
+			var birth=$("#birth").val();
+			var hiredate=$("#hiredate").val();
+			var births = birth.split("-");
+		    var birthdays = new Date(births[0], births[1], births[2]);
+		    var birthday = birthdays.getTime();
+		
+		    var hiredates = hiredate.split("-");
+		    var entryDays = new Date(hiredates[0], hiredates[1], hiredates[2]);
+		    var entryDay = entryDays.getTime();
+		    if (birthday >= entryDay) {
+		
+		        alert(i18n('global.checkDate'));
+		        return false;
+		    }
+		    else
+		        return true;
+		}
+	</script>
+</body>
+</html>

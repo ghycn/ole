@@ -1,0 +1,39 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<@g.close />
+<body>
+	<form action="${ctx}/user/updateDay" method="post" id="userForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "menu.leaveDays" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<input type="hidden" value="${user.userCode}" name="userCode"/>
+			<input type="hidden" value="<#if user.status>true<#else>false</#if>" name="status"/>
+			<table id="userEditTable" width="550">
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.userName" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="name" readonly="readonly" value="${user.name}" check-type="required" required-message="<@m.m 'global.notNull' />"></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "sys.leaveDays" />：</td>
+					<td class="controls"><input type="text" class="form-control" name="vacationDays" value="${user.vacationDays}" check-type="required"></td>
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+			<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+	<script type="text/javascript">
+		$('#userForm').validation();
+		$('.clear_date').datetimepicker({
+			endDate: currentDate,
+			weekStart: 1,
+			todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<@g.close />
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<form action="${ctx}/activity/save" method="post" id="roleForm" myForm="j&p">
+	<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "global.add" /></div>
+	<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+		<table id="roleAddTable" style="margin-left: 25px;">
+			<tr>
+				<td style="text-align: right;"><@m.m "activity.code" />：</td>
+				<td><input type="text" class="form-control" name="activityCode" style="width: 450px;"></td>
+			</tr>
+			<tr>
+				<td style="text-align: right;"><@m.m "activity.name" />：</td>
+				<td><input type="text" class="form-control" name="name"></td>
+			</tr>
+		</table>
+		<input type="button" value="<@m.m 'global.cancel' />" class="btn btn-default" data-dismiss="modal"/>
+		<input type="submit" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+	</div>
+</form>

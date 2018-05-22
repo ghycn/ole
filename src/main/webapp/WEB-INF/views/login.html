@@ -1,0 +1,58 @@
+<@g.docType />
+<html>
+<@g.head title="global.index">
+<link href="${ctx}/static/css/login.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/script/language.js"></script>
+</@g.head>
+<body>
+<div id="Pagetop" class="pagetop clearfix">
+	<div class="lang_list">
+		<div class="lang_wrap">
+			<div style="float: right;">
+				<ul class="nav navbar-top-links" style="float: left;height: 35px;">
+					<li class="dropdown" style="height: 35px;">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" style="height: 35px;padding: 0px;background: none;">
+							<i class="fa fa-language fa-fw" style="font-size: 14px;"></i>
+							<i class="fa fa-caret-down" style="font-size: 14px;"></i>
+						</a>
+						<ul class="dropdown-menu" style="margin-left: -120px;margin-top: 18px;">
+							<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('en_US')"><@m.m 'global.english'/></a></li>
+							<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('zh_TW')"><@m.m 'global.zhTW'/></a></li>
+							<li><a href="javascript:void(0);" onclick="javascript:changeLanguage('zh_CN')"><@m.m 'global.zhCN'/></a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="Container">
+	<div id="login_top">
+		<img src="${ctx}/static/images/loginLogo.png">
+	</div>
+	<div id="login_main">
+		<form id="loginform" name="loginform"  method="post" action="${ctx}/login">
+			<table>
+				<tr>
+					<td><input tabindex="1" class="form-control" placeholder="<@m.m 'sys.userID' />" name="userCode"  type="text" /></td>
+				</tr>
+				<tr>
+					<td><input tabindex="2" class="form-control" placeholder="<@m.m 'global.password' />" name="password" type="password" ></td>
+				</tr>
+				<tr>
+					<td>
+						<input class="enter_btn" type="submit" value="<@m.m 'global.login' />" />
+						<span class="error">
+							<#if error??>
+								<@m.m error />
+							</#if>
+						</span>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+</body>
+</html>

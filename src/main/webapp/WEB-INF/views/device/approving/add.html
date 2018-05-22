@@ -1,0 +1,98 @@
+<@g.docType />
+<html>
+ <link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<!-- <script type="text/javascript" src="${ctx}/static/script/project/apply.js"></script> -->
+<!-- <script type="text/javascript" src="${ctx}/static/script/global.js"></script> -->
+<@g.close />
+<body>
+	<form action="${ctx}/approving/deviceBorrow/saveOrUpdate" method="post" id="prProjectForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "device.borrow.borrowRecordAdd" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="projectAddTable" style="text-align: center">
+				<tr>
+					<td style="text-align: right;"><@m.m "device.name" />：</td>
+					<td>
+		 			<select class="form-control"  onchange="selectChange();" id="deviceCode1" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+							<option value="" ><@m.m "global.pleaseChoose" /></option>
+							<#list deviceList as device>
+								<option value="${device.deviceCode}-${device.stockNum}" >${device.name}</option>
+							</#list>
+						</select>
+						<input type="hidden" id="deviceCode2"  name="deviceCode" />
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrower" />：</td>
+					<td class="controls">
+						<select class="form-control" name="userCode" id="userCode" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+							<#list userList as user>
+								<option value="${user.userCode}">${user.name}</option>
+							</#list>
+						</select>
+					<!-- <input type="text"  class="form-control" name="applicantName" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;" /> -->
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.borrowTime" />：</td>
+					<td class="controls">
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="borrowTime" value="${currentDate}" readonly/>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.stockNum" />：</td>
+					<td>
+					<input type="text"  class="form-control" name="stockNum" id="stockNum" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;" readonly/>
+					<!-- 	<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="returnTime" value="${currentDate}" readonly/>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div> -->
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "device.borrow.lendNum" />：</td>
+					<td>
+					<input type="text"  class="form-control" name="lendNum" id="lendNum" pattern="^\d+$" check-type="number" required-message="<@m.m 'global.notNull' />" style="width: 450px;" />
+					<!-- 	<select class="form-control" name="status" id="status" onchange="generateProjectCode(this);" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+								<option value="0"><@m.m "device.borrow.return" /></option>
+								<option value="1"><@m.m "device.borrow.noReturn" /></option>
+						</select> -->
+					</td>				
+				</tr>
+			</table>
+			<input type="button" value="<@m.m 'global.save' />" onclick="checkedNuber()" class="btn btn-default" style="margin: 10px 0;" />
+			<input type="button" value="<@m.m 'global.cancel' />"
+				class="btn btn-default" data-dismiss="modal" />
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+	$('.clear_date').datetimepicker({
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+
+	function selectChange(){
+		 var options=$("#deviceCode1 option:selected");  //获取选中的项
+		// alert(options.val());   //拿到选中项的值
+		var arr = options.val().split("-");
+		document.getElementById("deviceCode2").value=arr[0];
+		document.getElementById("stockNum").value=arr[1];
+	}
+	function checkedNuber(){
+		var stockNum=$('#stockNum').val();
+		var lendNum=$('#lendNum').val();
+		if(parseInt(lendNum)>parseInt(stockNum)){
+			alert(i18n('device.borrow.checkLendNum'));
+			return false;
+		}
+		$('#prProjectForm').submit();
+	}	
+</script>
+</html>

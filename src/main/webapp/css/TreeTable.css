@@ -1,0 +1,27 @@
+.treeTable {
+	width: 100%;
+	border-collapse: collapse;
+	border: solid 1px #e8e8e8;
+}
+
+.treeTableHeader td {
+	height: 20px;
+	line-height: 20px;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.treeTableRow {
+	margin: 0;
+	padding: 0;
+}
+
+.treeTableCell {
+	height: 25px;
+	line-height: 25px;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	border: solid 1px #e8e8e8;
+}

@@ -1,0 +1,66 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/project/apply.js"></script>
+<script type="text/javascript" src="${ctx}/static/script/global.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/project/update" method="post" id="prProjectForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "caselist.edit" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="projectAddTable" style="text-align: center">
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.caseNum" />：</td>
+					<td><input type="text" class="form-control" name="projectCode" id="projectCode" readonly="readonly" value="${project.projectCode}" style="width: 450px;" /></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.caseName" />：</td>
+					<td class="controls"><input type="text" value="${project.name}" placeholder="<@m.m "quotation.caseName" />" class="form-control" name="name" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;" /></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.companyName" />：</td>
+					<td class="controls">
+						<select class="form-control" disabled="disabled" name="customer.customerCode" id="customerCode" onchange="generateProjectCode(this);" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+							<#list customers as customer>
+								<option value="${customer.customerCode}" <#if project.customerCode==customer.customerCode>selected="selected"</#if>>${customer.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.caseTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="openTime" value="${project.openTime}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>				
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.executionTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="executionTime" value="${project.executionTime}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>				
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.closeTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="closeTime" value="${project.closeTime}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>			
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "global.note" />：</td>
+					<td class="controls"><input type="text" value="${project.notes}" placeholder="<@m.m "global.note" />" class="form-control" name="notes" style="width: 450px;" /></td>
+				</tr>
+			</table>
+			<input type="submit" value="<@m.m 'global.edit' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+</html>

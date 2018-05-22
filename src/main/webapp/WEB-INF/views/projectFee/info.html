@@ -1,0 +1,73 @@
+<@g.close />
+<div
+	style="text-align: center; font-size: 16px; font-weight: bolder; margin: 10px auto;"><@m.m
+	"global.info" /></div>
+<table class="tables"
+	style="width: 80%; text-align: center; margin-left: 35px;">
+	<tr>
+		<td style="text-align: right;"><@m.m "coseAnalysis.quotation" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.quotationName}" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "projectFee.quotationName"
+			/>：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.supplierName}" readonly="readonly"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "supplier.accountName" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.accountName}" readonly="readonly"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "supplier.bankAccount" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.bankAccount}" readonly="readonly"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "supplier.bankName" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.bankName}" readonly="readonly"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "supplier.branchName" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.branchName}" readonly="readonly"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "projectFee.type" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.type}" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "projectFee.money" />：</td>
+		<td class="controls"><input type="text" class="form-control"
+			value="<#if projectFee.amount??>${projectFee.amount?string('##0.00#')}<#else>0.00</#if>"
+			readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "projectFee.applyTime" />：</td>
+		<td><input type="text" class="form-control"
+			value="${projectFee.applyDate}" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "projectFee.info" />：</td>
+		<td class="controls"><input type="text" class="form-control"
+			value="${projectFee.name}" readonly="readonly"></td>
+	</tr>
+	<tr>
+		<td style="text-align: right;"><@m.m "global.note" />：</td>
+		<td><textarea class="form-control" rows="3" readonly="readonly">${projectFee.notes}</textarea>
+		</td>
+	</tr>
+</table>
+<div style="margin: 20px 0; text-align: center; width: 100%;">
+	<input type="button" value="<@m.m 'global.sure' />"
+		class="btn btn-default" data-dismiss="modal" />
+</div>

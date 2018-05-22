@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 活动表 -->
+	<class name="com.etiansoft.ole.po.CostAnalysisItem" table="COST_ANALYSIS_ITEM">
+		<id name="costAnalysisItemId" column="COST_ANALYSIS_ITEM_ID">
+			<generator class="native" />
+		</id>
+		<many-to-one name="costAnalysis" column="COST_ANALYSIS_ID"/>
+		<many-to-one name="quotationList" column="QUOTATION_LIST_ID"/>
+		<property name="taxQuotation" column="TAX_QUOTATION" />
+	</class>
+</hibernate-mapping>

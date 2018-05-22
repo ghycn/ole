@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 客户表 -->
+	<class name="com.etiansoft.ole.po.Customer" table="CUSTOMER">
+		<id name="customerCode" type="java.lang.String">
+			<column name="CUSTOMER_CODE" not-null="true"/>
+			<generator class="assigned" />
+		</id>
+		<property name="status" type="java.lang.Integer">
+			<column name="STATUS" not-null="true">
+				<comment>状态</comment>
+			</column>
+		</property>
+		<property name="name" type="java.lang.String">
+			<column name="NAME" not-null="true">
+				<comment>名称</comment>
+			</column>
+		</property>
+		<property name="type" type="java.lang.String">
+			<column name="type" not-null="true">
+				<comment>类型</comment>
+			</column>
+		</property>
+		<property name="customerAddress" type="java.lang.String">
+			<column name="ADDRESS">
+				<comment>所在地</comment>
+			</column>
+		</property>
+		<property name="officialWebsite" type="java.lang.String">
+			<column name="OFFICIAL_WEBSITE">
+				<comment>官網</comment>
+			</column>
+		</property>
+		<property name="note" type="java.lang.String">
+			<column name="NOTE">
+				<comment>备注</comment>
+			</column>
+		</property>
+		<property name="remove" type="boolean">
+			<column name="REMOVE" not-null="true">
+				<comment>是否删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

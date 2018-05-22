@@ -1,0 +1,148 @@
+<@g.docType />
+<html>
+<link href="${ctx}/static/css/customer.css" rel="stylesheet">
+<script type="text/javascript" src="${ctx}/static/script/project/apply.js"></script>
+<@g.close />
+<body>
+	<form action="${ctx}/project/save" method="post" id="prProjectForm" myForm="j&p">
+		<div style="text-align: center;font-size: 16px;font-weight: bolder;"><@m.m "caselist.add" /></div>
+		<div class="tab-content" style="text-align: center;padding-bottom: 5px;">
+			<table id="projectAddTable" style="text-align: center">
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.caseNum" />：</td>
+					<td><input type="text" class="form-control" name="projectCode" id="projectCode" readonly="readonly" value="${dateStr[0]}${serialNumber}-" style="width: 450px;" /></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.caseName" />：</td>
+					<td class="controls"><input type="text" placeholder="<@m.m "quotation.caseName" />" class="form-control" name="name" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;" /></td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "quotation.companyType" />：</td>
+					<td class="controls">
+						<select class="form-control"  id="customerType" onchange="createCustomerSelect(this.value);" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+							<option value="" ><@m.m 'global.pleaseChoose'/></option>
+							<#list customersTypeList as customerType>
+								<option value="${customerType.name}">${customerType.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.companyName" />：</td>
+					<td class="controls">
+						<select class="form-control" name="customerCode" id="customerCode" onchange="generateProjectCode(this);" check-type="required" required-message="<@m.m 'global.notNull' />" style="width: 450px;">
+					    <option value="" ><@m.m 'global.pleaseChoose'/></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.caseTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="openTime" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.executionTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="executionTime" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>				
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "caselist.closeTime" />：</td>
+					<td>
+						<div class="input-group date clear_date col-md-5" data-date-format="yyyy-mm-dd" style="width: 450px;">
+							<input class="form-control calculate" size="16" style="width: 410px;cursor: pointer;" type="text" name="closeTime" value="${currentDate}" readonly>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</td>			
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "customer.approver" />：</td>
+					<td class="controls">
+						<select class="form-control" name="approvalOfPersonnel" id="approvalOfPersonnel"   style="width: 450px;">
+							<option value=""><@m.m "global.pleaseChoose" /></option>
+							<#list users as user>
+								<option value="${user.userCode}">${user.name}</option>
+							</#list>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: right;"><@m.m "global.note" />：</td>
+					<td class="controls"><input type="text" placeholder="<@m.m "global.note" />" class="form-control" name="notes" style="width: 450px;" /></td>
+				</tr>
+			</table>
+			<input type="submit" onclick="return commit();" value="<@m.m 'global.save' />" class="btn btn-default" style="margin: 10px 0;" />
+		</div>
+	</form>
+</body>
+</html>
+<script type="text/javascript">
+	$(function (){
+		$('.clear_date').datetimepicker({
+// 		startDate: currentDate,
+		weekStart: 1,
+		todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+	
+	})
+
+	function commit(){
+		if($("#customerType").val()==""){
+			alert(i18n('quotation.chooseCompanyType'));
+			return  false;
+		}
+		if($("#customerCode").val()==""){
+			alert(i18n('quotation.chooseCompany'));
+			return  false;
+		}
+		var approvalOfPersonnel=$("#approvalOfPersonnel").val();
+		
+		if(approvalOfPersonnel==""){
+			alert(i18n('customer.chooseApprovalPerson'));
+			return  false;
+		}
+		var theSelect = document.getElementById("approvalOfPersonnel");
+		var index = theSelect.selectedIndex;
+		var val = theSelect.options[index].text;
+		if(confirm(i18n('customer.sureOne')+val+ ' '+i18n('customer.sureTwo')+"?")){
+			return true;
+		}else{
+			return false;
+		}
+	}	
+	
+	function createCustomerSelect(customerTypeName){
+
+		var customerTypeName =  encodeURI(encodeURI(customerTypeName));
+		var url = ctx+"/project/queryCustomers?customerTypeName="+customerTypeName;
+		 $.ajax({   
+		        async : false,   
+		        cache:false, 
+		        type: 'POST',
+		        url: url, //请求的action路径    
+		        error: function () {//请求失败处理函数   
+		        },   
+		        success:function(data){ //请求成功后处理函数。    
+		        	var list = eval(data);
+		        	var obj=document.getElementById('customerCode');
+		        	obj.options.length = 0;
+		        	obj.options.add(new Option(i18n('global.pleaseChoose'),"")); //这个兼容IE与firefox
+		        	for(var i = 0;i<list.length;i++){
+		        		obj.options.add(new Option(list[i]["name"],list[i]["customerCode"])); //这个兼容IE与firefox
+		        	}
+		        }
+		 });
+	}
+</script>

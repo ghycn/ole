@@ -1,0 +1,40 @@
+<@g.docType />
+<html>
+<@g.head title="menu.badManagement">
+<script type="text/javascript" src="${ctx}/static/script/badManagement/applyList.js"></script>
+</@g.head>
+<body>
+<@g.top />
+<@g.nav />
+<div id="wrapper">
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="tabs-search">
+				<@g.nav_tabs names="menu.costAnalysisOfSingle,menu.badManagement,menu.collectMoney"
+							 urls="/cost/coseAnalysis/list,/badAccount/applyList,/collectMoney/list"
+							 active="menu.badManagement"/>
+				<div class="tableSearch" style="width: 100%;">
+					<label>&nbsp;&nbsp;<@m.m "quotation.name" />:&nbsp;</label>
+					<input class="form-control input-sm" id="projectName" name="projectName" style="width: 100px; display: inline;">  
+					<label>&nbsp;&nbsp;<@m.m "quotation.applicant" />:&nbsp;</label>
+					<input class="form-control input-sm" id="people" name="people" style="width: 100px; display: inline;"> 
+					<label style="float: left;height: 30px;line-height: 30px;">&nbsp;&nbsp;<@m.m "global.status" />:&nbsp;</label>
+					<select name="selectDropDown" id="selectDropDown" class="form-control" style="height: 30px; width: 150px;display: inline;float: left;">
+						<option selected="true"><@m.m "holiday.whole"/></option>
+						<option value="1"><@m.m "holiday.approve"/></option>
+						<option value="2"><@m.m "holiday.rejectedChange"/></option>
+						<option value="3"><@m.m "holiday.cancellation"/></option>
+					</select>
+					<button class="btn btn-default btn-sm" type="button" onclick="search('badAccount-dataTable')"><@m.m "global.query" /></button>
+					<input type="button" value="<@m.m 'bad.addAccount' />" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalDiv" data-backdrop="static" href="${ctx}/badAccount/apply/add"/>
+				</div>
+			</div>
+			<@g.modal id="modalDiv"/>
+			<div class="panel-body">
+				<table class="table table-striped table-bordered table-hover" id="badAccount-dataTable" myRp="g"></table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

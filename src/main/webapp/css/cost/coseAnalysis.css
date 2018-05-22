@@ -1,0 +1,102 @@
+.head{
+	background: #ccc;
+}
+
+.treeTableRow{
+	cursor: pointer;
+}
+
+#coseAnalysisDiv{
+	background: white;
+	margin: 0 auto;
+	margin-top: 80px;
+	padding: 10px 20px 15px 20px;
+	border-radius:8px;
+}
+
+#coseAnalysisDiv table{
+	width: 100%;
+	margin: 0 auto;
+}
+
+#coseAnalysisDiv td, #coseAnalysisDiv th{
+	border: 1px solid #797979;
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	width: 10%;
+}
+
+#coseAnalysisDiv table th{
+	background: #ccc;
+}
+
+#coseAnalysisDiv table input,#coseAnalysisDiv table textarea{
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	border: none;
+	text-align: center;
+}
+
+.title2{
+	background: #e4e4e4;
+}
+
+.buttonTr td{
+	border: none;
+}
+
+.buttonTr td input{
+	height: 66px;
+	background: #ddd;
+	color: #990000;
+	font-size: 30px;
+	font-weight: bolder;
+}
+
+.selectbox{
+	height:220px;
+	margin:40px auto 0 20px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.selectbox div{
+	float:left;
+}
+
+.selectbox table{
+	table-layout: fixed;
+}
+
+.selectbox table tr td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+.selectbox .btn{
+	height:30px; 
+	margin-top:10px; 
+	cursor:pointer;
+}
+
+.selected{
+	background: #999;
+}
+
+.quotationItem{
+	table-layout: fixed;
+}
+
+.quotationItem td{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.idtitle{
+	display: none;
+}
